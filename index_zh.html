@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pi Desktop — 把 Pi agent harness 装进桌面：Windows / macOS / Linux / HarmonyOS</title>
+  <meta name="description" content="Pi 的开源、非官方桌面壳：上游 Pi Web UI 原样复用，装进 Windows、macOS、Linux 的 Electron 应用，另有 HarmonyOS 版。本地优先、进程内宿主、零上游改动。" />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f7f6" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#090d0b" />
+  <script>
+    /* Apply the persisted theme before first paint to avoid a flash of the wrong theme. */
+    (function () {
+      try {
+        var t = localStorage.getItem('pi-theme');
+        if (!t) {
+          t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {
+        /* localStorage unavailable (e.g. file:// with strict settings): keep default */
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/svg+xml" href="images/logo.svg" />
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="主导航">
+      <a class="brand" href="#top"><img src="images/logo.svg" alt="Pi Desktop" class="brand-logo" /><span class="brand-suffix">Pi Desktop</span></a>
+      <div class="nav-links">
+        <a href="#features">功能</a>
+        <a href="#platforms">平台</a>
+        <a href="#how">工作原理</a>
+      </div>
+      <div class="nav-actions">
+        <div class="lang-switch" role="group" aria-label="语言">
+          <a class="lang" href="index.html" hreflang="en">EN</a>
+          <span class="lang-sep" aria-hidden="true">/</span>
+          <a class="lang is-active" href="index_zh.html" hreflang="zh-CN" aria-current="page">中文</a>
+        </div>
+        <button
+          id="theme-toggle"
+          class="icon-btn"
+          type="button"
+          aria-label="切换深色模式"
+          data-label-dark="切换深色模式"
+          data-label-light="切换浅色模式">
+          <svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+          </svg>
+          <svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- ============================== HERO ============================== -->
+    <section id="top" class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">开源 · MIT · 非官方的 Pi 桌面壳</span>
+          <h1>让 Pi agent harness 在桌面安家。</h1>
+          <p class="lede">Pi Desktop 把上游的 Pi Web UI —— 原样不改 —— 装进 Windows、macOS、Linux 与 HarmonyOS 的原生外壳里。Pi 宿主和它的 Next.js 服务器跑在应用自身进程内，窗口从同一个源加载这套 UI：没有云端中转、没有 CORS、没有登录页，PATH 里也不需要 <code>pi</code> 二进制。你现有的会话、凭据与扩展照样可用。</p>
+          <ul class="os-strip" aria-label="支持的桌面平台">
+            <li class="os-chip"><span class="os-dot" aria-hidden="true"></span>Windows</li>
+            <li class="os-chip"><span class="os-dot" aria-hidden="true"></span>macOS</li>
+            <li class="os-chip"><span class="os-dot" aria-hidden="true"></span>Linux</li>
+            <li class="os-chip"><span class="os-dot" aria-hidden="true"></span>HarmonyOS</li>
+          </ul>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="https://github.com/fellow99/pi-desktop" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.81 8.21 11.4.6.11.82-.26.82-.58 0-.29-.01-1.04-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.48 1 .11-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6.01 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22 0 1.6-.01 2.89-.01 3.28 0 .32.21.7.82.58A12 12 0 0 0 12 0z"></path></svg>
+              获取 Pi Desktop
+            </a>
+            <a class="btn btn-outline" href="https://github.com/fellow99/pi-desktop-hos" target="_blank" rel="noopener">
+              HarmonyOS 版
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
+            </a>
+            <a class="btn btn-ghost" href="#how">
+              工作原理
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"></path></svg>
+            </a>
+          </div>
+          <p class="trust">
+            桌面版 v0.11.1 · Windows 打包态端到端已验收；macOS &amp; Linux 待验证
+            <br>
+            HarmonyOS<sup>(1)</sup> v0.11.1 · versionCode 1101 · 已构建、已签名、真机验证
+            <br>
+            基于 pi v1.1.0 + pi-web v0.11.1 · 零上游改动 · 安装包未签名
+            <br>
+            <sup>(1)</sup>HarmonyOS 6.1.0.135（API 24），2in1 与平板。
+          </p>
+        </div>
+
+        <div class="hero-visual">
+          <figure class="hero-shot">
+            <img src="images/light.png" data-shot="light" alt="Pi Desktop 运行上游 Pi Web UI 的浅色主题画面，界面为简体中文" width="2372" height="1530" />
+            <img src="images/dark.png" data-shot="dark" alt="Pi Desktop 运行上游 Pi Web UI 的深色主题画面，界面为简体中文" width="2372" height="1530" />
+          </figure>
+          <p class="shot-caption">Pi Desktop 运行上游 Pi Web UI 的实拍截图（在 Windows 上采集；界面本身是简体中文）。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ FEATURES ============================ -->
+    <section id="features" class="section">
+      <div class="container">
+        <p class="section-eyebrow">$ 为什么要原生外壳</p>
+        <div class="section-head">
+          <h2>为什么要原生外壳</h2>
+          <p class="section-lede">完整的 Pi 体验 —— 但没有那个浏览器标签页。</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"></rect><path d="M16 5.5H6.5A2 2 0 0 0 4.5 7.5V17"></path></svg>
+            </span>
+            <h3>100% 上游 <a href="https://github.com/earendil-works/pi" target="_blank" rel="noopener">Pi</a> 与 <a href="https://github.com/agegr/pi-web" target="_blank" rel="noopener">Pi Web</a> —— 零上游改动。</h3>
+            <p>Pi SDK 与 Pi Web UI 原样运行，壳只负责装配。本版本必需补丁 0 条，所以上游的改进可以直接跟上，不必维护一个 fork 去 rebase。</p>
+          </article>
+
+          <article class="feature-card">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="2"></rect><rect x="3" y="14" width="18" height="6" rx="2"></rect><path d="M7 7h.01M7 17h.01"></path></svg>
+            </span>
+            <h3>本地优先，进程内。</h3>
+            <p>Pi 宿主与它的 Next.js 服务器跑在应用自己的主进程里 —— 没有 sidecar、没有孤儿 Node 进程 —— UI 从同一个源加载。没有任何东西经云端中转，也没有需要你粘贴密码的登录页。</p>
+          </article>
+
+          <article class="feature-card">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M9 20h6M12 16v4"></path></svg>
+            </span>
+            <h3>一个桌面公民。</h3>
+            <p>系统托盘、由尾随会话日志驱动的原生通知、单实例唤回、记住的窗口尺寸与位置，外链交给系统浏览器打开。</p>
+          </article>
+
+          <article class="feature-card">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="12" r="4"></circle><path d="M12 12h9M17 12v3.5M20 12v2.5"></path></svg>
+            </span>
+            <h3>与 <code>pi</code> CLI 共用一套环境。</h3>
+            <p>默认落在 <code>~/.pi/agent</code>，所以会话、凭据、扩展与 MCP 配置就是你终端里已经在用的那一套。需要隔离时，可以在设置里切到应用私有目录。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ PLATFORMS =========================== -->
+    <section id="platforms" class="section">
+      <div class="container">
+        <p class="section-eyebrow">$ 选择你的桌面</p>
+        <div class="section-head">
+          <h2>选择你的桌面</h2>
+        </div>
+
+        <div class="platform-grid">
+          <article class="platform-card">
+            <div class="platform-head">
+              <h3>Pi Desktop</h3>
+              <span class="platform-tag">Electron · Windows · macOS · Linux</span>
+            </div>
+            <ul class="bullet-list">
+              <li>Electron 43.7.9（Node 24.21.0 / Chromium 150）：pi-web 的 Next.js 服务器跑在主进程内，不是 sidecar。</li>
+              <li>随机 loopback 端口配宿主生成的随机强密码 —— 凭据由壳注入，登录页永不出现。</li>
+              <li>随包分发 <code>pi-dist.tar.gz</code>，首启解压到 <code>userData</code>，之后按 SHA-256 marker 跳过。</li>
+              <li>安装包：Squirrel（Windows）、DMG（macOS）、deb / rpm / zip（Linux）—— 未签名，SmartScreen 与 Gatekeeper 会拦。</li>
+              <li>已知限制：本构建的终端面板不可用（缺 <code>win32-x64</code> 的 node-pty 原生件）。</li>
+              <li>状态：v0.11.1 · Windows 打包态端到端已验收；macOS 与 Linux 待验证。</li>
+            </ul>
+            <a class="repo-link" href="https://github.com/fellow99/pi-desktop" target="_blank" rel="noopener">
+              在 GitHub 上查看
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </a>
+          </article>
+
+          <article class="platform-card">
+            <div class="platform-head">
+              <h3>Pi Desktop · HarmonyOS</h3>
+              <span class="platform-tag">Electron-on-鸿蒙 · 2in1 与平板</span>
+            </div>
+            <ul class="bullet-list">
+              <li>在 <a href="https://atomgit.com/jianguoxu/harmonypc-electron" target="_blank" rel="noopener">harmonypc-electron</a> 运行时上跑 Electron 37.2.3 / Node 22.17.0，打包为 HAP。</li>
+              <li>已构建、已签名、真机验证 —— HarmonyOS 6.1.0.135（API 24）。</li>
+              <li>完整的上游 Pi Web UI；会话持久化在应用沙箱内。</li>
+              <li>绑定 <code>0.0.0.0</code>，窗口经局域网 IP 连接 —— 因为鸿蒙对 loopback 做了网络隔离。</li>
+              <li>已知限制：无终端 / PTY、无 <code>git</code>、无 ripgrep 与 fd 二进制、插件只能装本地源。</li>
+              <li>状态：v0.11.1 · versionCode 1101。</li>
+            </ul>
+            <a class="repo-link" href="https://github.com/fellow99/pi-desktop-hos" target="_blank" rel="noopener">
+              在 GitHub 上查看
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </a>
+          </article>
+        </div>
+
+        <p class="disclaimer">两个版本合起来覆盖四个桌面平台 —— Windows、Linux、macOS（Electron 版）加 HarmonyOS。这是两个独立的、非官方的开源壳，建立在 Pi 与 Pi Web 之上、零上游改动；与 Pi 或 Pi Web 作者无隶属关系，也未获其背书。目前均未做代码签名，Windows 上会出现 SmartScreen 提示，macOS 上会被 Gatekeeper 拦下。</p>
+      </div>
+    </section>
+
+    <!-- ============================ HOW IT WORKS ========================= -->
+    <section id="how" class="section">
+      <div class="container">
+        <p class="section-eyebrow">$ 工作原理</p>
+        <div class="section-head">
+          <h2>一个宿主。一个源。零摩擦。</h2>
+        </div>
+
+        <ol class="steps">
+          <li class="step">
+            <span class="step-num" aria-hidden="true">1</span>
+            <div>
+              <h3>进程内宿主</h3>
+              <p>壳在 Electron 主进程里启动 pi-web 的 Next.js 服务器。</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">2</span>
+            <div>
+              <h3>同源 UI</h3>
+              <p>窗口从这台服务器加载 <code>http://127.0.0.1:&lt;port&gt;/</code>。</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">3</span>
+            <div>
+              <h3>上游数据面</h3>
+              <p>标准的 Pi Web UI 驱动全部通信：<code>fetch('/api/*')</code> 上行，SSE 下行。</p>
+            </div>
+          </li>
+        </ol>
+
+        <p class="result-badge">无 CORS · 无自定义协议 · 无登录页 · 零上游改动。</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================== FOOTER ============================== -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-left">
+        <div class="footer-brand"><img src="images/logo.svg" alt="Pi Desktop" class="brand-logo footer-brand-logo" /><span class="brand-suffix">Pi Desktop</span></div>
+        <p class="footer-one-liner">一个非官方的开源桌面壳，为 Pi agent harness 而生。</p>
+        <p class="footer-copy">&copy; 2026 fellow99 · MIT 许可 · 建立在开源的 Pi 与 Pi Web 之上</p>
+      </div>
+      <nav class="footer-links" aria-label="页脚">
+        <a href="https://github.com/fellow99/pi-desktop" target="_blank" rel="noopener">
+          桌面版仓库
+          <svg class="ext" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
+        </a>
+        <a href="https://github.com/fellow99/pi-desktop-hos" target="_blank" rel="noopener">
+          HarmonyOS 仓库
+          <svg class="ext" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
+        </a>
+        <a href="https://github.com/fellow99/pi-workspace" target="_blank" rel="noopener">
+          工作区仓库
+          <svg class="ext" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
+        </a>
+        <a href="https://github.com/earendil-works/pi" target="_blank" rel="noopener">
+          Pi
+          <svg class="ext" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
+        </a>
+        <a href="https://github.com/agegr/pi-web" target="_blank" rel="noopener">
+          Pi Web
+          <svg class="ext" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
+        </a>
+        <a href="https://atomgit.com/jianguoxu/harmonypc-electron" target="_blank" rel="noopener">
+          harmonypc-electron
+          <svg class="ext" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
+        </a>
+        <a href="https://www.electronjs.org/" target="_blank" rel="noopener">
+          Electron
+          <svg class="ext" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
+        </a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

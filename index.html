@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pi Desktop — An Electron shell for the Pi agent harness, on Windows, macOS, Linux &amp; HarmonyOS</title>
+  <meta name="description" content="Open-source, unofficial desktop shells for Pi: the upstream Pi Web UI, untouched, inside an Electron app for Windows, macOS and Linux, plus a HarmonyOS edition. Local-first, in-process host, zero upstream changes." />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f7f6" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#090d0b" />
+  <script>
+    /* Apply the persisted theme before first paint to avoid a flash of the wrong theme. */
+    (function () {
+      try {
+        var t = localStorage.getItem('pi-theme');
+        if (!t) {
+          t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {
+        /* localStorage unavailable (e.g. file:// with strict settings): keep default */
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/svg+xml" href="images/logo.svg" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="Primary">
+      <a class="brand" href="#top"><img src="images/logo.svg" alt="Pi Desktop" class="brand-logo" /><span class="brand-suffix">Pi Desktop</span></a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#platforms">Platforms</a>
+        <a href="#how">How it works</a>
+      </div>
+      <div class="nav-actions">
+        <div class="lang-switch" role="group" aria-label="Language">
+          <a class="lang is-active" href="index.html" hreflang="en" aria-current="page">EN</a>
+          <span class="lang-sep" aria-hidden="true">/</span>
+          <a class="lang" href="index_zh.html" hreflang="zh-CN">中文</a>
+        </div>
+        <button
+          id="theme-toggle"
+          class="icon-btn"
+          type="button"
+          aria-label="Toggle dark mode"
+          data-label-dark="Toggle dark mode"
+          data-label-light="Toggle light mode">
+          <svg class="i-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+          </svg>
+          <svg class="i-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- ============================== HERO ============================== -->
+    <section id="top" class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Open source · MIT · Unofficial Pi desktop shells</span>
+          <h1>The Pi agent harness, at home on the desktop.</h1>
+          <p class="lede">Pi Desktop runs the upstream Pi Web UI — untouched — inside native shells for Windows, macOS, Linux and HarmonyOS. The Pi host and its Next.js server run inside the app itself, and the window loads that UI from the same origin: no cloud relay, no CORS, no login page, and no <code>pi</code> binary needed on your PATH. Your existing sessions, credentials and extensions come along.</p>
+          <ul class="os-strip" aria-label="Supported desktop platforms">
+            <li class="os-chip"><span class="os-dot" aria-hidden="true"></span>Windows</li>
+            <li class="os-chip"><span class="os-dot" aria-hidden="true"></span>macOS</li>
+            <li class="os-chip"><span class="os-dot" aria-hidden="true"></span>Linux</li>
+            <li class="os-chip"><span class="os-dot" aria-hidden="true"></span>HarmonyOS</li>
+          </ul>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="https://github.com/fellow99/pi-desktop" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.81 8.21 11.4.6.11.82-.26.82-.58 0-.29-.01-1.04-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.48 1 .11-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6.01 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22 0 1.6-.01 2.89-.01 3.28 0 .32.21.7.82.58A12 12 0 0 0 12 0z"></path></svg>
+              Get Pi Desktop
+            </a>
+            <a class="btn btn-outline" href="https://github.com/fellow99/pi-desktop-hos" target="_blank" rel="noopener">
+              HarmonyOS edition
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
+            </a>
+            <a class="btn btn-ghost" href="#how">
+              How it works
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"></path></svg>
+            </a>
+          </div>
+          <p class="trust">
+            Desktop v0.11.1 · packaged end-to-end verified on Windows; macOS &amp; Linux pending
+            <br>
+            HarmonyOS<sup>(1)</sup> v0.11.1 · versionCode 1101 · built, signed and verified on device
+            <br>
+            Built on pi v1.1.0 + pi-web v0.11.1 · zero upstream changes · installers are unsigned
+            <br>
+            <sup>(1)</sup>HarmonyOS 6.1.0.135 (API 24), 2-in-1 and tablet.
+          </p>
+        </div>
+
+        <div class="hero-visual">
+          <figure class="hero-shot">
+            <img src="images/light.png" data-shot="light" alt="Pi Desktop running the upstream Pi Web UI in light theme, in Simplified Chinese" width="2372" height="1530" />
+            <img src="images/dark.png" data-shot="dark" alt="Pi Desktop running the upstream Pi Web UI in dark theme, in Simplified Chinese" width="2372" height="1530" />
+          </figure>
+          <p class="shot-caption">Pi Desktop running the upstream Pi Web UI. Captured on Windows; the interface itself is Simplified Chinese.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ FEATURES ============================ -->
+    <section id="features" class="section">
+      <div class="container">
+        <p class="section-eyebrow">$ why a native shell</p>
+        <div class="section-head">
+          <h2>Why a native shell</h2>
+          <p class="section-lede">The whole Pi experience — none of the browser tab.</p>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"></rect><path d="M16 5.5H6.5A2 2 0 0 0 4.5 7.5V17"></path></svg>
+            </span>
+            <h3>100% <a href="https://github.com/earendil-works/pi" target="_blank" rel="noopener">upstream Pi</a> &amp; <a href="https://github.com/agegr/pi-web" target="_blank" rel="noopener">Pi Web</a> — zero upstream changes.</h3>
+            <p>The Pi SDK and the Pi Web UI run unmodified; the shell only assembles them. This release ships zero required patches, so upstream improvements land without a fork to rebase.</p>
+          </article>
+
+          <article class="feature-card">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="2"></rect><rect x="3" y="14" width="18" height="6" rx="2"></rect><path d="M7 7h.01M7 17h.01"></path></svg>
+            </span>
+            <h3>Local-first, in-process.</h3>
+            <p>The Pi host and its Next.js server run inside the app's own main process — no sidecar, no orphaned Node processes — and the UI loads from that same origin. Nothing is relayed through the cloud, and there is no login page to paste a password into.</p>
+          </article>
+
+          <article class="feature-card">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M9 20h6M12 16v4"></path></svg>
+            </span>
+            <h3>A desktop citizen.</h3>
+            <p>System tray, native notifications driven by tailing the session log, single-instance focus, a remembered window size and position, and external links handed to your system browser.</p>
+          </article>
+
+          <article class="feature-card">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="12" r="4"></circle><path d="M12 12h9M17 12v3.5M20 12v2.5"></path></svg>
+            </span>
+            <h3>Shares your <code>pi</code> CLI environment.</h3>
+            <p>Defaults to <code>~/.pi/agent</code>, so sessions, credentials, extensions and MCP configuration are the same ones your terminal already uses. Switch to an app-private directory in settings when you want isolation.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ PLATFORMS =========================== -->
+    <section id="platforms" class="section">
+      <div class="container">
+        <p class="section-eyebrow">$ choose your desktop</p>
+        <div class="section-head">
+          <h2>Choose your desktop</h2>
+        </div>
+
+        <div class="platform-grid">
+          <article class="platform-card">
+            <div class="platform-head">
+              <h3>Pi Desktop</h3>
+              <span class="platform-tag">Electron · Windows · macOS · Linux</span>
+            </div>
+            <ul class="bullet-list">
+              <li>Electron 43.7.9 (Node 24.21.0 / Chromium 150): pi-web's Next.js server runs in the main process, not as a sidecar.</li>
+              <li>Random loopback port with a host-generated random password — credentials are injected, so the login page never appears.</li>
+              <li>Ships <code>pi-dist.tar.gz</code>, extracted into <code>userData</code> on first launch and skipped afterwards (SHA-256 marker).</li>
+              <li>Installers: Squirrel (Windows), DMG (macOS), deb / rpm / zip (Linux) — unsigned, so SmartScreen and Gatekeeper will ask.</li>
+              <li>Known limitation: the terminal panel is unavailable in this build (no <code>win32-x64</code> node-pty binary).</li>
+              <li>Status: v0.11.1 · packaged end-to-end verified on Windows; macOS and Linux pending.</li>
+            </ul>
+            <a class="repo-link" href="https://github.com/fellow99/pi-desktop" target="_blank" rel="noopener">
+              View on GitHub
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </a>
+          </article>
+
+          <article class="platform-card">
+            <div class="platform-head">
+              <h3>Pi Desktop · HarmonyOS</h3>
+              <span class="platform-tag">Electron-on-HarmonyOS · 2-in-1 &amp; tablet</span>
+            </div>
+            <ul class="bullet-list">
+              <li>Electron 37.2.3 / Node 22.17.0 on the <a href="https://atomgit.com/jianguoxu/harmonypc-electron" target="_blank" rel="noopener">harmonypc-electron</a> runtime, packaged as a HAP.</li>
+              <li>Built, signed and verified on device — HarmonyOS 6.1.0.135 (API 24).</li>
+              <li>The full upstream Pi Web UI; sessions persist inside the app sandbox.</li>
+              <li>Binds <code>0.0.0.0</code> and the window connects over the LAN IP, since HarmonyOS isolates loopback the other way.</li>
+              <li>Known limitations: no terminal / PTY, no <code>git</code>, no ripgrep or fd binaries, plugin installs are local-source only.</li>
+              <li>Status: v0.11.1 · versionCode 1101.</li>
+            </ul>
+            <a class="repo-link" href="https://github.com/fellow99/pi-desktop-hos" target="_blank" rel="noopener">
+              View on GitHub
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </a>
+          </article>
+        </div>
+
+        <p class="disclaimer">Together, both editions cover four desktop platforms — Windows, Linux and macOS (Electron) plus HarmonyOS. Two independent, unofficial open-source shells built on Pi and Pi Web with zero upstream changes; not affiliated with, or endorsed by, the Pi or Pi Web authors. Nothing is code-signed yet, so expect a SmartScreen prompt on Windows and Gatekeeper on macOS.</p>
+      </div>
+    </section>
+
+    <!-- ============================ HOW IT WORKS ========================= -->
+    <section id="how" class="section">
+      <div class="container">
+        <p class="section-eyebrow">$ how it works</p>
+        <div class="section-head">
+          <h2>One host. One origin. Zero friction.</h2>
+        </div>
+
+        <ol class="steps">
+          <li class="step">
+            <span class="step-num" aria-hidden="true">1</span>
+            <div>
+              <h3>In-process host</h3>
+              <p>The shell starts pi-web's Next.js server inside the Electron main process.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">2</span>
+            <div>
+              <h3>Same-origin UI</h3>
+              <p>The window loads <code>http://127.0.0.1:&lt;port&gt;/</code> from that very server.</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">3</span>
+            <div>
+              <h3>Upstream data plane</h3>
+              <p>The standard Pi Web UI drives it: <code>fetch('/api/*')</code> up, SSE down.</p>
+            </div>
+          </li>
+        </ol>
+
+        <p class="result-badge">No CORS · No custom protocol · No login page · Zero upstream changes.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================== FOOTER ============================== -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-left">
+        <div class="footer-brand"><img src="images/logo.svg" alt="Pi Desktop" class="brand-logo footer-brand-logo" /><span class="brand-suffix">Pi Desktop</span></div>
+        <p class="footer-one-liner">an unofficial, open-source desktop shell for the Pi agent harness.</p>
+        <p class="footer-copy">&copy; 2026 fellow99 · MIT License · Built on the open-source Pi and Pi Web projects</p>
+      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="https://github.com/fellow99/pi-desktop" target="_blank" rel="noopener">
+          Desktop repo
+          <svg class="ext" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
+        </a>
+        <a href="https://github.com/fellow99/pi-desktop-hos" target="_blank" rel="noopener">
+          HarmonyOS repo
+          <svg class="ext" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
+        </a>
+        <a href="https://github.com/fellow99/pi-workspace" target="_blank" rel="noopener">
+          Workspace repo
+          <svg class="ext" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
+        </a>
+        <a href="https://github.com/earendil-works/pi" target="_blank" rel="noopener">
+          Pi
+          <svg class="ext" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
+        </a>
+        <a href="https://github.com/agegr/pi-web" target="_blank" rel="noopener">
+          Pi Web
+          <svg class="ext" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
+        </a>
+        <a href="https://atomgit.com/jianguoxu/harmonypc-electron" target="_blank" rel="noopener">
+          harmonypc-electron
+          <svg class="ext" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
+        </a>
+        <a href="https://www.electronjs.org/" target="_blank" rel="noopener">
+          Electron
+          <svg class="ext" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
+        </a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
