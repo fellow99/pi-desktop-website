@@ -44,24 +44,35 @@
 - **当前版本**：`pi-desktop` **v0.11.1** · `pi-desktop-hos` **v0.11.1**（`versionCode` 1101）；
   两者共同的上游基线是 `pi` **v1.1.0** + `pi-web` **v0.11.1**。
   改版本号时，本站文案、下面的事实表、以及两个产品 README 必须一起改。
+- **分发状态**：`pi-desktop` 已打 tag **`v0.11.1`** 并在 GitHub Release 发布 **9 个资产**
+  （Windows `Setup.exe` + `full.nupkg` + `RELEASES`、win32-x64 / darwin-arm64 / linux-x64 三个 zip、
+  macOS `arm64.dmg`、`amd64.deb`、`x86_64.rpm`），CI 与 Release 流水线均已跑绿；
+  `pi-desktop-hos` **尚无 tag、无 Release**（HAP 目前只在本地产出）。
+  ⚠️ 页面**尚未**因此新增下载入口 —— 见下方「页面 CTA 口径」与 §9 待办。
+
 
 ### 文案准确度护栏（必须永远成立）
 
-- **每条claim都必须能回溯到产品 README / 源码 / 验证记录。** 今天已经落进页面的例子：
+- **每条 claim 都必须能回溯到产品 README / 源码 / 验证记录。** 今天已经落进页面的例子：
   「Windows 打包态端到端已验收、macOS / Linux 待验证」出自
-  `pi-desktop/docs/构建验证记录.md` 轮次 1；「已构建、已签名、真机验证（HarmonyOS 6.1.0.135 / API 24）」
+  `pi-desktop/docs/构建验证记录.md` 轮次 1–3；「已构建、已签名、真机验证（HarmonyOS 6.1.0.135 / API 24）」
   出自 `pi-desktop-hos/README.md`；「必需补丁 0 条」出自两个工程的 `patches/` 与 README。
 - **绝不虚构能力**：页面上不出现自动更新、代码签名、公证、商店分发、「官方产品」这类说法 ——
   两个壳都是**独立的、非官方的**开源工程，建立在 Pi 与 Pi Web 之上，
   **与上游作者无隶属关系、未获其背书**。
-- **两个仓库当前都没有 git tag、没有 GitHub Release** ⇒ 页面上**不出现"下载安装包"**，
-  所有 CTA 一律指向 GitHub 仓库；trust 行只说"仓库已公开、版本号是多少、验证到哪一步"。
-- **未验证项按严格口径处理**：能力卡只写有证据的内容；`pi-desktop-hos` 与桌面版已知不可用的项
-  （终端 / PTY、鸿蒙无 `git`、无 `rg`/`fd`、插件仅本地源）**不在页面正面宣传**，
-  只在需要区分桌面 / 鸿蒙时以「已知限制」的形式出现在平台卡的 bullet 里。
-- **托盘与原生通知**：代码已实现（`pi-desktop/src/main/{tray,notifications}.ts`），
-  已在这一版随包构建，但**系统级呈现尚未专项取证**（`docs/桌面能力清单.md` §A#7 / §A#8 仍为 ⬜）。
-  页面按「已实现」陈述，事实依据登记在本表下方；一旦专项取证有结论，回写此处与产品文档。
+- **页面 CTA 口径**：`pi-desktop` 现在**已有** tag `v0.11.1` 与 GitHub Release（9 资产），但
+  页面 CTA **仍一律指向 GitHub 仓库**、**不出现"下载安装包"入口** —— 是否改成直接指向 Release
+  下载页属**待办 ⬜**（见 §9），本文件只登记事实、不擅自改页面。`pi-desktop-hos` 无 Release，
+  其 CTA 只能指向仓库；trust 行只说"版本号是多少、验证到哪一步"。
+- **未验证项按严格口径处理**：能力卡只写有证据的内容。已实测定论的项**可以正面写**
+  （桌面：终端 / PTY ✅、原生通知 ✅）；仍未取证的项只按"已实现"陈述（桌面：系统托盘视觉呈现 ⬜）。
+  `pi-desktop-hos` 已知不可用的项（终端 / PTY、无 `git`、无 `rg`/`fd`、插件仅本地源）
+  **不在页面正面宣传**，只在需要区分桌面 / 鸿蒙时以「已知限制」的形式出现在平台卡的 bullet 里。
+- **托盘与原生通知**：代码已实现（`pi-desktop/src/main/{tray,notifications}.ts`）并随包构建。
+  **原生通知**已在轮次 2 用 P0-5 专项取证 —— 聚焦不弹 · 最小化弹出（延迟 **2054 ms**）·
+  同会话 **10 s 冷却去重** · 冷却后可再弹 · 启动不补弹 = **5 PASS / 0 FAIL**
+  （`pi-desktop/docs/桌面能力清单.md` §A#7 已 ✅）；系统**托盘的视觉呈现**仍不可编程判定
+  （§A#8 ⬜ / O7），页面只按"已实现"陈述。
 - 截图是**简体中文界面的真实产品截图**；英文页在 caption 里明确说明这一点，避免误导。
 - 产品事实变化时：**先改产品 README，再改本站两个语言页，最后改本文件的事实表。**
 
@@ -75,12 +86,13 @@
 | 鸿蒙运行时 | Electron-on-鸿蒙 **37.2.3**（Node 22.17.0 / ABI 138） | `pi-desktop-hos/README.md` |
 | 上游基线 | `pi` **v1.1.0** + `pi-web` **v0.11.1** | `upstream.lock.json` |
 | 上游补丁 | **必需补丁 0 条**（品牌化只作用于本工程产物副本） | `pi-desktop/specs/012-branding/spec.md`、`pi-desktop-hos/patches/README.md` |
-| 桌面验证状态 | **Windows 打包态端到端已验收**（TC 16 PASS / 0 FAIL）；**macOS / Linux 待验证** | `pi-desktop/docs/构建验证记录.md` 轮次 1 |
+| 桌面验证状态 | **Windows 打包态端到端已验收**（TC-01…TC-16 全 PASS；打包态 11 PASS / 0 FAIL、`smoke-desktop` 10 PASS / 0 FAIL、安装器副本 R1–R7 7 PASS / 0 FAIL）；**macOS / Linux 待验证** | `pi-desktop/docs/构建验证记录.md` 轮次 1–3 |
 | 鸿蒙验证状态 | **已构建、已签名、已真机验证**（HarmonyOS 6.1.0.135 / API 24） | `pi-desktop-hos/docs/真机验证记录.md` |
-| 桌面已知不可用 | 终端 / PTY ❌（缺 `win32-x64` 原生件，与 ABI 无关） | `pi-desktop/docs/桌面能力清单.md` §A#1 |
+| 桌面已知不可用 | **无阻断项** —— 终端 / PTY 已在轮次 2 实测 **✅ 可用**（根因是**本机安装不完整的空壳 prebuilds**、触发上游 `prebuild.js` 误判，**不是**上游缺 `win32-x64` 产物；已修并加构建期守卫 `FR-010-027`）。仍为 ⬜ 的只有「系统托盘视觉呈现」 | `pi-desktop/docs/桌面能力清单.md` §A#1 / §A#8 |
 | 鸿蒙已知不可用 | 终端 / PTY ❌ · `git` ❌ · `rg`/`fd` ❌ · 插件联网安装 ❌ | `pi-desktop-hos/README.md` |
-| 分发与签名 | GitHub 仓库分发；v1 **不签名、不公证、不静默更新** | `pi-desktop/docs/发布与更新.md` §7 |
-| 托盘 / 原生通知 / 单实例 / 窗口状态记忆 | 代码已实现并随包构建；**系统级呈现 ⬜ 未专项取证**（页面按「已实现」陈述，不作"已验收"宣称） | `pi-desktop/src/main/{tray,notifications,window-state}.ts`、`pi-desktop/docs/桌面能力清单.md` §A#7 / §A#8 / §A#12 / §A#13 |
+| 发布产物 | `pi-desktop`：tag **`v0.11.1`** + **GitHub Release 9 资产**（Windows `Setup.exe` / `full.nupkg` / `RELEASES`、win32-x64 · darwin-arm64 · linux-x64 三个 zip、macOS `arm64.dmg`、`amd64.deb`、`x86_64.rpm`）；`pi-desktop-hos`：**无 tag、无 Release**（HAP 仅本地产出） | GitHub Release 页 `v0.11.1`、`pi-desktop-hos/README.md` |
+| 分发与签名 | 桌面版走 **GitHub Release**（tag `v0.11.1`，CI / Release 流水线跑绿）；鸿蒙版目前只在本地产出 HAP。两者 v1 **不签名、不公证、不静默更新** | `pi-desktop/docs/发布与更新.md` §7 |
+| 托盘 / 原生通知 / 单实例 / 窗口状态记忆 | **原生通知 ✅ 已专项取证**（P0-5：聚焦不弹 · 最小化弹出延迟 **2054 ms** · 同会话 **10 s 冷却去重** · 冷却后可再弹 · 启动不补弹 = 5 PASS / 0 FAIL）；系统**托盘视觉呈现 ⬜ 未取证**（O7）；单实例与窗口状态记忆为代码已实现并随包构建 | `pi-desktop/src/main/{tray,notifications,window-state}.ts`、`pi-desktop/docs/桌面能力清单.md` §A#7 / §A#8 / §A#12 / §A#13 |
 | 与 `pi` CLI 共用 `~/.pi/agent` | 默认共享；设置内可切 `<userData>/pi-agent`（切换后需重启） | `pi-desktop/README.md`、`pi-desktop/docs/桌面能力清单.md` §A#14 |
 | 站点仓库 | <https://github.com/fellow99/pi-desktop-website> | `git remote -v` |
 
@@ -187,6 +199,12 @@ npx serve .        # 然后访问 http://localhost:3000/index.html
 
 ## 9. 维护清单
 
+- [ ] **⏳ 页面下载入口（未决）**：`pi-desktop` 已有 tag `v0.11.1` 与 GitHub Release（9 资产）——
+      是否把 Hero 主 CTA 从「仓库」改为「下载」（指向 Release 页）需单独决策；**决定前不改**
+      两个语言页的 CTA `href`（现状：一律指向 GitHub 仓库）。
+- [ ] **限制句只能写"当前仍成立"的**：桌面卡旧句「终端面板不可用」已于 2026-10-13（PTY 实测 ✅）删除；
+      `pi-desktop-hos` 卡的限制句（无终端 / PTY、无 `git`、无 `rg`/`fd`、插件仅本地源）仍成立。
+      改动前先回查 §2 事实表。
 - [ ] **改文案？** `index.html` **和** `index_zh.html` 都要改（必要时同步 §2 的事实表）。
 - [ ] **加区块？** 两个语言页 1:1 镜像标记结构 + 在 `style.css` 里加 token / 样式。
 - [ ] **改主题或交互？** 保持 token 驱动 + 无 JS 兜底 + reduced-motion 分支。
@@ -196,3 +214,10 @@ npx serve .        # 然后访问 http://localhost:3000/index.html
 - [ ] **离线自检**：`file://` 打开两个页面，控制台零错误、零网络请求。
 - [ ] **目检**：1280 / 768 / 390 三个宽度 × 明暗两个主题。
 - [ ] **不新增外部请求**：不引 CDN、不引 web font、不加统计脚本。
+
+## 10. 变更记录
+
+| 版本 | 日期 | 内容 |
+|---|---|---|
+| v1.0 | 2026-10-12 | 建档：纯静态站点设计文档（定位 / 事实表 / 结构 / 设计系统 / 交互 / 响应式 / 素材 / 部署 / 维护）。 |
+| v1.1 | 2026-10-13 | 按 0.11.1 事实回写：§2 新增「分发状态」与「页面 CTA 口径」；事实表新增「发布产物」行，更正「桌面验证状态」（轮次 1–3）、「桌面已知不可用」（终端 / PTY ❌ → **✅ 可用**，并更正根因）、「分发与签名」、「托盘 / 原生通知」（通知 ✅ / 托盘 ⬜）；删除两个语言页平台卡中已失效的桌面 PTY 限制句；§2 护栏与 §9 维护清单同步更新。 |
