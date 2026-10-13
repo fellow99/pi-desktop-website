@@ -55,8 +55,8 @@
 
 - **每条 claim 都必须能回溯到产品 README / 源码 / 验证记录。** 今天已经落进页面的例子：
   「Windows 打包态端到端已验收、macOS / Linux 待验证」出自
-  `pi-desktop/docs/构建验证记录.md` 轮次 1–3；「已构建、已签名、真机验证（HarmonyOS 6.1.0.135 / API 24）」
-  出自 `pi-desktop-hos/README.md`；「必需补丁 0 条」出自两个工程的 `patches/` 与 README。
+  `pi-desktop/docs/构建验证记录.md` 轮次 1–3；「已构建、已签名、真机验证（HUAWEI MateBook Pro `HAD-W32`，HarmonyOS API 26）」
+  出自 `pi-desktop-hos/docs/真机验证记录.md`；「必需补丁 0 条」出自两个工程的 `patches/` 与 README。
 - **绝不虚构能力**：页面上不出现自动更新、代码签名、公证、商店分发、「官方产品」这类说法 ——
   两个壳都是**独立的、非官方的**开源工程，建立在 Pi 与 Pi Web 之上，
   **与上游作者无隶属关系、未获其背书**。
@@ -74,7 +74,7 @@
   （`pi-desktop/docs/桌面能力清单.md` §A#7 已 ✅）；系统**托盘的视觉呈现**仍不可编程判定
   （§A#8 ⬜ / O7），页面只按"已实现"陈述。
 - 截图是**简体中文界面的真实产品截图**；英文页在 caption 里明确说明这一点，避免误导。
-- 产品事实变化时：**先改产品 README，再改本站两个语言页，最后改本文件的事实表。**
+- 产品事实变化时：**先改产品 README 与 `package.json` / `app.json5`，再改本文件事实表，最后改两页文案。**
 
 ### 事实表（页面文案的唯一依据）
 
@@ -87,7 +87,7 @@
 | 上游基线 | `pi` **v1.1.0** + `pi-web` **v0.11.1** | `upstream.lock.json` |
 | 上游补丁 | **必需补丁 0 条**（品牌化只作用于本工程产物副本） | `pi-desktop/specs/012-branding/spec.md`、`pi-desktop-hos/patches/README.md` |
 | 桌面验证状态 | **Windows 打包态端到端已验收**（TC-01…TC-16 全 PASS；打包态 11 PASS / 0 FAIL、`smoke-desktop` 10 PASS / 0 FAIL、安装器副本 R1–R7 7 PASS / 0 FAIL）；**macOS / Linux 待验证** | `pi-desktop/docs/构建验证记录.md` 轮次 1–3 |
-| 鸿蒙验证状态 | **已构建、已签名、已真机验证**（HarmonyOS 6.1.0.135 / API 24） | `pi-desktop-hos/docs/真机验证记录.md` |
+| 鸿蒙验证状态 | **已构建、已签名、已真机验证**（HUAWEI MateBook Pro `HAD-W32` / `HAD-W24 7.0.0.107` / **API 26**） | `pi-desktop-hos/docs/真机验证记录.md` |
 | 桌面已知不可用 | **无阻断项** —— 终端 / PTY 已在轮次 2 实测 **✅ 可用**（根因是**本机安装不完整的空壳 prebuilds**、触发上游 `prebuild.js` 误判，**不是**上游缺 `win32-x64` 产物；已修并加构建期守卫 `FR-010-027`）。仍为 ⬜ 的只有「系统托盘视觉呈现」 | `pi-desktop/docs/桌面能力清单.md` §A#1 / §A#8 |
 | 鸿蒙已知不可用 | 终端 / PTY ❌ · `git` ❌ · `rg`/`fd` ❌ · 插件联网安装 ❌ | `pi-desktop-hos/README.md` |
 | 发布产物 | `pi-desktop`：tag **`v0.11.1`** + **GitHub Release 9 资产**（Windows `Setup.exe` / `full.nupkg` / `RELEASES`、win32-x64 · darwin-arm64 · linux-x64 三个 zip、macOS `arm64.dmg`、`amd64.deb`、`x86_64.rpm`）；`pi-desktop-hos`：**无 tag、无 Release**（HAP 仅本地产出） | GitHub Release 页 `v0.11.1`、`pi-desktop-hos/README.md` |
@@ -221,3 +221,4 @@ npx serve .        # 然后访问 http://localhost:3000/index.html
 |---|---|---|
 | v1.0 | 2026-10-12 | 建档：纯静态站点设计文档（定位 / 事实表 / 结构 / 设计系统 / 交互 / 响应式 / 素材 / 部署 / 维护）。 |
 | v1.1 | 2026-10-13 | 按 0.11.1 事实回写：§2 新增「分发状态」与「页面 CTA 口径」；事实表新增「发布产物」行，更正「桌面验证状态」（轮次 1–3）、「桌面已知不可用」（终端 / PTY ❌ → **✅ 可用**，并更正根因）、「分发与签名」、「托盘 / 原生通知」（通知 ✅ / 托盘 ⬜）；删除两个语言页平台卡中已失效的桌面 PTY 限制句；§2 护栏与 §9 维护清单同步更新。 |
+| v1.2 | 2026-10-13 | 评审回写：更正**鸿蒙真机口径** —— 原文写 `HarmonyOS 6.1.0.135 / API 24`（实为**参考工程**的版本，本项目文档明确标注其属 🔶 沿用），真机为 `HUAWEI MateBook Pro` / `HAD-W32` / `HAD-W24 7.0.0.107` / **API 26**（源：`pi-desktop-hos/docs/真机验证记录.md`）；同步改两页 hero 脚注与平台卡共 4 处（EN/ZH 结构 1:1 不变）；§2 与 §9 的「改事实的先后顺序」统一。自检：`file://` + headless Chrome —— 控制台零错误/零异常、仅 6 个同源文件请求、零外部请求、EN/ZH 结构骨架逐节点一致（204 = 204）、1280·768·390 三宽度无横向溢出。 |
