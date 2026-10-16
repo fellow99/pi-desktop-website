@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pi Desktop — 把 Pi agent harness 装进桌面：Windows / macOS / Linux / HarmonyOS</title>
-  <meta name="description" content="Pi 的开源、非官方桌面壳：上游 Pi Web UI 原样复用，装进 Windows、macOS、Linux 的 Electron 应用，另有 HarmonyOS 版。本地优先、进程内宿主、零上游改动。" />
+  <meta name="description" content="Pi 的开源、非官方桌面壳：上游 Pi Web UI 原样复用，装进 Windows、macOS、Linux 的 Electron 应用，另有 HarmonyOS 版。本地优先、进程内宿主。" />
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f7f6" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#090d0b" />
   <script>
@@ -89,11 +89,11 @@
             </a>
           </div>
           <p class="trust">
-            桌面版 v0.11.1 · Windows 打包态端到端已验收；macOS &amp; Linux 待验证
+            桌面版 v0.12.1 · Windows 打包态端到端已验收；macOS &amp; Linux 待验证
             <br>
-            HarmonyOS<sup>(1)</sup> v0.11.1 · versionCode 1101 · 已构建、已签名、真机验证
+            HarmonyOS<sup>(1)</sup> v0.12.1 · versionCode 1201 · 已构建、已签名、真机验证 · 2 条登记的上游补丁
             <br>
-            基于 pi v1.1.0 + pi-web v0.11.1 · 零上游改动 · 安装包未签名
+            基于 pi v1.2.0 + pi-web v0.12.1 · 桌面版 0 条补丁 · 安装包未签名
             <br>
             <sup>(1)</sup>真机：HUAWEI MateBook Pro（<code>HAD-W32</code>），HarmonyOS API 26；2in1 与平板。
           </p>
@@ -123,8 +123,8 @@
             <span class="icon">
               <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"></rect><path d="M16 5.5H6.5A2 2 0 0 0 4.5 7.5V17"></path></svg>
             </span>
-            <h3>100% 上游 <a href="https://github.com/earendil-works/pi" target="_blank" rel="noopener">Pi</a> 与 <a href="https://github.com/agegr/pi-web" target="_blank" rel="noopener">Pi Web</a> —— 零上游改动。</h3>
-            <p>Pi SDK 与 Pi Web UI 原样运行，壳只负责装配。本版本必需补丁 0 条，所以上游的改进可以直接跟上，不必维护一个 fork 去 rebase。</p>
+            <h3>100% 上游 <a href="https://github.com/earendil-works/pi" target="_blank" rel="noopener">Pi</a> 与 <a href="https://github.com/agegr/pi-web" target="_blank" rel="noopener">Pi Web</a> —— SDK 与 UI 原样运行。</h3>
+            <p>Pi SDK 与 Pi Web UI 原样运行，壳只负责装配。桌面版 0 条补丁，上游的改进可以直接跟上，不必维护一个 fork 去 rebase。鸿蒙版有 2 条登记补丁，在构建期幂等应用、构建结束即回退，两个上游工作树始终保持 pristine。</p>
           </article>
 
           <article class="feature-card">
@@ -173,7 +173,7 @@
               <li>随机 loopback 端口配宿主生成的随机强密码 —— 凭据由壳注入，登录页永不出现。</li>
               <li>随包分发 <code>pi-dist.tar.gz</code>，首启解压到 <code>userData</code>，之后按 SHA-256 marker 跳过。</li>
               <li>安装包：Squirrel（Windows）、DMG（macOS）、deb / rpm / zip（Linux）—— 未签名，SmartScreen 与 Gatekeeper 会拦。</li>
-              <li>状态：v0.11.1 · Windows 打包态端到端已验收；macOS 与 Linux 待验证。</li>
+              <li>状态：v0.12.1 · Windows 打包态端到端已验收；macOS 与 Linux 待验证。</li>
             </ul>
             <a class="repo-link" href="https://github.com/fellow99/pi-desktop" target="_blank" rel="noopener">
               在 GitHub 上查看
@@ -192,7 +192,7 @@
               <li>完整的上游 Pi Web UI；会话持久化在应用沙箱内。</li>
               <li>绑定 <code>0.0.0.0</code>，窗口经局域网 IP 连接 —— 因为鸿蒙对 loopback 做了网络隔离。</li>
               <li>已知限制：无终端 / PTY、无 <code>git</code>、无 ripgrep 与 fd 二进制、插件只能装本地源。</li>
-              <li>状态：v0.11.1 · versionCode 1101。</li>
+              <li>状态：v0.12.1 · versionCode 1201。</li>
             </ul>
             <a class="repo-link" href="https://github.com/fellow99/pi-desktop-hos" target="_blank" rel="noopener">
               在 GitHub 上查看
@@ -201,7 +201,7 @@
           </article>
         </div>
 
-        <p class="disclaimer">两个版本合起来覆盖四个桌面平台 —— Windows、Linux、macOS（Electron 版）加 HarmonyOS。这是两个独立的、非官方的开源壳，建立在 Pi 与 Pi Web 之上、零上游改动；与 Pi 或 Pi Web 作者无隶属关系，也未获其背书。目前均未做代码签名，Windows 上会出现 SmartScreen 提示，macOS 上会被 Gatekeeper 拦下。</p>
+        <p class="disclaimer">两个版本合起来覆盖四个桌面平台 —— Windows、Linux、macOS（Electron 版）加 HarmonyOS。这是两个独立的、非官方的开源壳，建立在 Pi 与 Pi Web 之上；桌面版无补丁，鸿蒙版有 2 条登记补丁。与 Pi 或 Pi Web 作者无隶属关系，也未获其背书。目前均未做代码签名，Windows 上会出现 SmartScreen 提示，macOS 上会被 Gatekeeper 拦下。</p>
       </div>
     </section>
 
@@ -237,7 +237,7 @@
           </li>
         </ol>
 
-        <p class="result-badge">无 CORS · 无自定义协议 · 无登录页 · 零上游改动。</p>
+        <p class="result-badge">无 CORS · 无自定义协议 · 无登录页。</p>
       </div>
     </section>
   </main>
