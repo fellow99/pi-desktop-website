@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pi Desktop — An Electron shell for the Pi agent harness, on Windows, macOS, Linux &amp; HarmonyOS</title>
-  <meta name="description" content="Open-source, unofficial desktop shells for Pi: the upstream Pi Web UI, untouched, inside an Electron app for Windows, macOS and Linux, plus a HarmonyOS edition. Local-first, in-process host." />
+  <title>Pi Desktop — The Pi agent harness on the desktop: Windows, macOS, Linux &amp; HarmonyOS</title>
+  <meta name="description" content="Open-source, unofficial desktop shells for Pi: the upstream Pi Web UI, untouched, inside an Electron app for Windows, macOS and Linux, plus two HarmonyOS editions — Electron on HarmonyOS, and ArkWeb with an in-process Node runtime. Local-first, in-process host." />
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f7f6" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#090d0b" />
   <script>
@@ -79,8 +79,12 @@
               <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.44 9.81 8.21 11.4.6.11.82-.26.82-.58 0-.29-.01-1.04-.02-2.05-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.48 1 .11-.78.42-1.31.76-1.61-2.66-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6.01 0c2.29-1.55 3.3-1.23 3.3-1.23.66 1.66.24 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22 0 1.6-.01 2.89-.01 3.28 0 .32.21.7.82.58A12 12 0 0 0 12 0z"></path></svg>
               Get Pi Desktop
             </a>
+            <a class="btn btn-outline" href="https://github.com/fellow99/pi-desktop-ark" target="_blank" rel="noopener">
+              HarmonyOS Edition
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
+            </a>
             <a class="btn btn-outline" href="https://github.com/fellow99/pi-desktop-hos" target="_blank" rel="noopener">
-              HarmonyOS edition
+              Electron on HarmonyOS
               <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
             </a>
             <a class="btn btn-ghost" href="#how">
@@ -91,7 +95,9 @@
           <p class="trust">
             Desktop v0.12.1 · packaged end-to-end verified on Windows; macOS &amp; Linux pending
             <br>
-            HarmonyOS<sup>(1)</sup> v0.12.1 · versionCode 1201 · built, signed and verified on device · 2 registered upstream patches
+            Electron on HarmonyOS<sup>(1)</sup> v0.12.1 · versionCode 1201 · built, signed and verified on device · 2 registered upstream patches
+            <br>
+            HarmonyOS Edition v0.1.0 · ArkWeb + in-process Node v24.2.0 · verified on device (<code>HAD-W24</code> / API 26)
             <br>
             Built on pi v1.2.0 + pi-web v0.12.1 · desktop shell ships 0 patches · installers are unsigned
             <br>
@@ -124,7 +130,7 @@
               <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"></rect><path d="M16 5.5H6.5A2 2 0 0 0 4.5 7.5V17"></path></svg>
             </span>
             <h3>100% <a href="https://github.com/earendil-works/pi" target="_blank" rel="noopener">upstream Pi</a> &amp; <a href="https://github.com/agegr/pi-web" target="_blank" rel="noopener">Pi Web</a> — the SDK and UI run unmodified.</h3>
-            <p>The Pi SDK and the Pi Web UI run unmodified; the shell only assembles them. The desktop shell ships zero patches, so upstream improvements land without a fork to rebase. The HarmonyOS edition carries 2 registered patches that are applied idempotently at build time and reverted afterwards, so both upstream working trees stay pristine.</p>
+            <p>The Pi SDK and the Pi Web UI run unmodified; the shell only assembles them. The desktop shell ships zero patches, so upstream improvements land without a fork to rebase. The Electron on HarmonyOS Edition carries 2 registered patches, and the HarmonyOS Edition applies its 5 pi-web patches as idempotent, reversible files at build time — every upstream working tree stays pristine.</p>
           </article>
 
           <article class="feature-card">
@@ -183,7 +189,26 @@
 
           <article class="platform-card">
             <div class="platform-head">
-              <h3>Pi Desktop · HarmonyOS</h3>
+              <h3>Pi Desktop · HarmonyOS Edition</h3>
+              <span class="platform-tag">ArkWeb + in-process Node · 2-in-1 &amp; tablet</span>
+            </div>
+            <ul class="bullet-list">
+              <li>No Chromium and no Electron: an ArkTS host whose <strong>ArkWeb</strong> view loads the local pi-web server, which runs on a real <strong>Node.js runtime inside the app process</strong> (<a href="https://github.com/fellow99/ohos-node-bridge" target="_blank" rel="noopener"><code>@fellow99/node-bridge</code></a>: <code>dlopen</code> + <code>node::Start</code>).</li>
+              <li>Same in-process host and same origin as the Electron on HarmonyOS Edition — the difference is <em>which runtime provides Node</em>, and the payload is far smaller.</li>
+              <li>Host capabilities are explicit and attributable: permissions with next-step guidance, folder / file pickers, notifications, and a file-mailbox bridge between ArkTS and Node.</li>
+              <li>Verified on device — HUAWEI MateBook Pro (<code>HAD-W24</code>), HarmonyOS API 26; capability parity is tracked feature by feature in <code>docs/001-能力复刻评估.md</code>.</li>
+              <li>Known limitations: no terminal / PTY (the platform has no <code>devpts</code>); real JIT needs the <code>ALLOW_WRITABLE_CODE_MEMORY</code> ACL, otherwise the app runs <code>--jitless</code> and WebAssembly is unavailable.</li>
+              <li>Status: v0.1.0 · scaffold + Phase 1 capabilities on device.</li>
+            </ul>
+            <a class="repo-link" href="https://github.com/fellow99/pi-desktop-ark" target="_blank" rel="noopener">
+              View on GitHub
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </a>
+          </article>
+
+          <article class="platform-card">
+            <div class="platform-head">
+              <h3>Pi Desktop · Electron on HarmonyOS</h3>
               <span class="platform-tag">Electron-on-HarmonyOS · 2-in-1 &amp; tablet</span>
             </div>
             <ul class="bullet-list">
@@ -201,7 +226,7 @@
           </article>
         </div>
 
-        <p class="disclaimer">Together, both editions cover four desktop platforms — Windows, Linux and macOS (Electron) plus HarmonyOS. Two independent, unofficial open-source shells built on Pi and Pi Web; the desktop shell is patch-free and the HarmonyOS edition carries 2 registered patches. Not affiliated with, or endorsed by, the Pi or Pi Web authors. Nothing is code-signed yet, so expect a SmartScreen prompt on Windows and Gatekeeper on macOS.</p>
+        <p class="disclaimer">Together, the three editions cover four desktop platforms — Windows, Linux and macOS (Electron) plus HarmonyOS, where <strong>two</strong> independent editions ship: <strong>Electron on HarmonyOS</strong> (keeps the Electron runtime) and <strong>HarmonyOS</strong> (ArkWeb + an embedded Node runtime, no Electron). Three unofficial open-source shells built on Pi and Pi Web; the desktop shell is patch-free, the Electron on HarmonyOS Edition carries 2 registered patches and the HarmonyOS Edition 5 idempotent patch files. Not affiliated with, or endorsed by, the Pi or Pi Web authors. Nothing is code-signed yet, so expect a SmartScreen prompt on Windows and Gatekeeper on macOS.</p>
       </div>
     </section>
 
@@ -256,7 +281,15 @@
           <svg class="ext" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
         </a>
         <a href="https://github.com/fellow99/pi-desktop-hos" target="_blank" rel="noopener">
-          HarmonyOS repo
+          Electron on HarmonyOS repo
+          <svg class="ext" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
+        </a>
+        <a href="https://github.com/fellow99/pi-desktop-ark" target="_blank" rel="noopener">
+          HarmonyOS Edition repo
+          <svg class="ext" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
+        </a>
+        <a href="https://github.com/fellow99/ohos-node-bridge" target="_blank" rel="noopener">
+          Node runtime repo
           <svg class="ext" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
         </a>
         <a href="https://github.com/fellow99/pi-workspace" target="_blank" rel="noopener">

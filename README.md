@@ -30,20 +30,22 @@
 
 ## 2. 定位与关键信息
 
-- **是什么**：两个把 `Pi` agent harness 变成一等公民桌面应用的**独立开源封装工程**的营销落地页 ——
-  Electron 桌面壳（Windows / macOS / Linux）与 HarmonyOS 版（2in1 / 平板）。两者都在应用内承载
-  **官方、未修改的 Pi Web UI**（同源加载）。
+- **是什么**：把 `Pi` agent harness 变成一等公民桌面应用的**独立开源封装工程**的营销落地页，共三个版别 ——
+  **Pi Desktop**（Electron 桌面壳 · Windows / macOS / Linux）、**Pi Desktop · Electron on HarmonyOS 版**
+  （`pi-desktop-hos`）与 **Pi Desktop · HarmonyOS 版**（`pi-desktop-ark`，ArkWeb + 进程内 Node）。
+  三者都在应用内承载**官方、未修改的 Pi Web UI**（同源加载），差别只在「谁提供运行时」。
 - **标语**：EN *"The Pi agent harness, at home on the desktop."* ·
   ZH「让 Pi agent harness 在桌面安家」。
 - **四平台覆盖是标题级差异点** —— Windows、Linux、macOS（Electron 版）+ HarmonyOS。
-  它出现在：Hero 的 lede、lede 下的四个系统 chip（`ul.os-strip`）、两张平台卡、平台区声明。
-- **卖点（能力卡）**：100% 官方 Pi / Pi Web、**上游补丁分版计**（`pi-desktop` 桌面版 **0 条**补丁；`pi-desktop-hos` 鸿蒙版 **2 条**登记的上游补丁 —— `P203-1`「选择工作区目录」、`PFIX-1`「会话导出进程内回退」）· 本地优先、进程内宿主 ·
+  它出现在：Hero 的 lede、lede 下的四个系统 chip（`ul.os-strip`）、**三张**平台卡、平台区声明。
+- **卖点（能力卡）**：100% 官方 Pi / Pi Web、**上游补丁分版计**（`pi-desktop` **0 条**；`pi-desktop-hos` / Electron on HarmonyOS 版 **2 条**登记补丁 —— `P203-1`「选择工作区目录」、`PFIX-1`「会话导出进程内回退」；`pi-desktop-ark` / HarmonyOS 版 **5 条**幂等可逆补丁文件）· 本地优先、进程内宿主 ·
   桌面公民（托盘 / 原生通知 / 单实例 / 窗口状态记忆）· 与 `pi` CLI 共用同一套运行环境。
 - **架构故事（How it works）**：进程内宿主 → 同源 UI → 官方数据面（`fetch('/api/*')` 上行 +
   SSE 下行），收尾徽章「No CORS · No custom protocol · No login page.」（与两页现文案一致；旧描述里的「· Zero upstream patches」已按 v1.3 的分版补丁口径删除，补丁口径改由 hero trust 行**分版**表述）。
-- **当前版本**：`pi-desktop` **v0.12.1** · `pi-desktop-hos` **v0.12.1**（`versionCode` 1201）；
-  两者共同的上游基线是 `pi` **v1.2.0** + `pi-web` **v0.12.1**。
-  改版本号时，本站文案、下面的事实表、以及两个产品 README 必须一起改。
+- **当前版本**：`pi-desktop` **v0.12.1** · `pi-desktop-hos` **v0.12.1**（`versionCode` 1201）·
+  `pi-desktop-ark` **v0.1.0**（`versionCode` 100，骨架 + Phase 1 能力已真机可用）；三个版别共同的上游基线是
+  `pi` **v1.2.0** + `pi-web` **v0.12.1**。
+  改版本号时，本站文案、下面的事实表、以及三个产品 README 必须一起改。
 - **分发状态**：`pi-desktop` 已打 tag **`v0.12.1`**（`v0.11.1` 曾在 GitHub Release 发布 **9 个资产**：
   Windows `Setup.exe` + `full.nupkg` + `RELEASES`、win32-x64 / darwin-arm64 / linux-x64 三个 zip、
   macOS `arm64.dmg`、`amd64.deb`、`x86_64.rpm`，CI 与 Release 流水线当时均已跑绿）；
@@ -83,16 +85,19 @@
 |---|---|---|
 | `pi-desktop` 版本 | **v0.12.1** | `pi-desktop/package.json` |
 | 桌面运行时 | Electron **43.7.9**（Node 24.21.0 / Chromium 150.0.7871.250 / ABI 148） | `pi-desktop/README.md`、`upstream.lock.json` |
-| `pi-desktop-hos` 版本 | **v0.12.1** / `versionCode` **1201** | `pi-desktop-hos/AppScope/app.json5` |
+| `pi-desktop-hos`（Electron on HarmonyOS 版）版本 | **v0.12.1** / `versionCode` **1201** | `pi-desktop-hos/AppScope/app.json5` |
+| `pi-desktop-ark`（HarmonyOS 版）版本 | **v0.1.0** / `versionCode` **100** | `pi-desktop-ark/AppScope/app.json5` |
 | 鸿蒙运行时 | Electron-on-鸿蒙 **37.2.3**（Node 22.17.0 / ABI 138） | `pi-desktop-hos/README.md` |
-| 上游基线 | `pi` **v1.2.0** + `pi-web` **v0.12.1** | `pi-desktop/upstream.lock.json`、两个工程的 README 文档头 |
+| 上游基线 | `pi` **v1.2.0** + `pi-web` **v0.12.1** | `pi-desktop/upstream.lock.json`、各工程的 README 文档头 |
 | 上游补丁 | `pi-desktop` **0 条**；`pi-desktop-hos` **2 条**（`P203-1` 四主目录「选择工作区目录」、`PFIX-1` 会话导出进程内回退）——按被 patch 的上游 tag 分目录登记（`patches/v0.12.1/`），由构建脚本幂等应用、构建结束即回退，上游工作树保持 pristine | `pi-desktop-hos/patches/README.md`、`pi-desktop/specs/012-branding/spec.md` |
 | 桌面验证状态 | **Windows 打包态端到端已验收**（0.12.1 轮次：`smoke-desktop` 10 PASS / 0 FAIL、打包态 `probe-renderer` 7 PASS / 0 FAIL、基本功能 e2e 9 PASS / 0 FAIL；0.11.1 轮次另有 TC-01…TC-16 全 PASS 与安装器副本 R1–R7 7 PASS / 0 FAIL）；**macOS / Linux 待验证** | `pi-desktop/logs/20261015-1/`、`pi-desktop/docs/构建验证记录.md` |
-| 鸿蒙验证状态 | **已构建、已签名、已真机验证**（0.12.1 轮次 14 PASS / 0 FAIL：API KEY 落沙箱 `mode=600`、沙箱内工作区目录、一次真实对话与会话 JSONL 落盘、SWC 走内置 WASM 零下载）；设备 HUAWEI MateBook Pro `HAD-W32` / HarmonyOS **API 26** | `pi-desktop-hos/logs/20261015-1/`、`pi-desktop-hos/docs/真机验证记录.md` |
+| Electron on HarmonyOS 版验证状态 | **已构建、已签名、已真机验证**（0.12.1 轮次 14 PASS / 0 FAIL：API KEY 落沙箱 `mode=600`、沙箱内工作区目录、一次真实对话与会话 JSONL 落盘、SWC 走内置 WASM 零下载）；设备 HUAWEI MateBook Pro `HAD-W32` / HarmonyOS **API 26** | `pi-desktop-hos/logs/20261015-1/`、`pi-desktop-hos/docs/真机验证记录.md` |
 | 桌面已知不可用 | **无阻断项** —— 终端 / PTY 已在轮次 2 实测 **✅ 可用**（根因是**本机安装不完整的空壳 prebuilds**、触发上游 `prebuild.js` 误判，**不是**上游缺 `win32-x64` 产物；已修并加构建期守卫 `FR-010-027`）。仍为 ⬜ 的只有「系统托盘视觉呈现」 | `pi-desktop/docs/桌面能力清单.md` §A#1 / §A#8 |
-| 鸿蒙已知不可用 | 终端 / PTY ❌ · `git` ❌ · `rg`/`fd` ❌ · 插件联网安装 ❌ | `pi-desktop-hos/README.md` |
+| Electron on HarmonyOS 版已知不可用 | 终端 / PTY ❌ · `git` ❌ · `rg`/`fd` ❌ · 插件联网安装 ❌ | `pi-desktop-hos/README.md` |
+| HarmonyOS 版验证状态 | **已构建、已签名、已真机验证**（HUAWEI MateBook Pro `HAD-W24` / API 26）：进程内 Node `v24.2.0`、进程内 Next、ArkWeb 前端、文件信箱宿主桥、权限 / 选择器 / 通知 | `pi-desktop-ark/docs/001-能力复刻评估.md` |
+| HarmonyOS 版已知不可用 | 终端 / PTY ❌（无 `devpts`）· `git`/`rg`/`fd` ❌ · 插件联网安装 ❌ · 真 JIT 需 ACL，否则 `--jitless` 下 WASM 不可用 | `pi-desktop-ark/docs/001-能力复刻评估.md` §B |
 | 发布产物 | `pi-desktop`：tag **`v0.12.1`**（`v0.11.1` 的 GitHub Release 有 9 个资产：Windows `Setup.exe` / `full.nupkg` / `RELEASES`、win32-x64 · darwin-arm64 · linux-x64 三个 zip、macOS `arm64.dmg`、`amd64.deb`、`x86_64.rpm`）；`pi-desktop-hos`：tag **`v0.12.1`**、**无 Release**（HAP 仅本地产出） | `git tag`、GitHub Release 页 `v0.11.1`、`pi-desktop-hos/README.md` |
-| 分发与签名 | 桌面版走 **GitHub Release**（tag `v0.12.1`；`v0.11.1` 时 CI / Release 流水线跑绿）；鸿蒙版目前只在本地产出 HAP。两者 v1 **不签名、不公证、不静默更新** | `pi-desktop/docs/发布与更新.md` §7 |
+| 分发与签名 | 桌面版走 **GitHub Release**（tag `v0.12.1`；`v0.11.1` 时 CI / Release 流水线跑绿）；两个鸿蒙版别目前都只在本地产出 HAP。三者 v1 **不签名、不公证、不静默更新** | `pi-desktop/docs/发布与更新.md` §7 |
 | 托盘 / 原生通知 / 单实例 / 窗口状态记忆 | **原生通知 ✅ 已专项取证**（P0-5：聚焦不弹 · 最小化弹出延迟 **2054 ms** · 同会话 **10 s 冷却去重** · 冷却后可再弹 · 启动不补弹 = 5 PASS / 0 FAIL）；系统**托盘视觉呈现 ⬜ 未取证**（O7）；单实例与窗口状态记忆为代码已实现并随包构建 | `pi-desktop/src/main/{tray,notifications,window-state}.ts`、`pi-desktop/docs/桌面能力清单.md` §A#7 / §A#8 / §A#12 / §A#13 |
 | 与 `pi` CLI 共用 `~/.pi/agent` | 默认共享；设置内可切 `<userData>/pi-agent`（切换后需重启） | `pi-desktop/README.md`、`pi-desktop/docs/桌面能力清单.md` §A#14 |
 | 站点仓库 | <https://github.com/fellow99/pi-desktop-website> | `git remote -v` |
@@ -105,12 +110,14 @@
    胶囊形语言切换（`EN / 中文`）· 主题按钮。锚点链接 ≤ 760px 隐藏；品牌 / 语言 / 主题保留。
 2. **Hero**（`section#top`）：左列文案 —— mono eyebrow 胶囊、`<h1>`、lede、
    `ul.os-strip`（Windows / macOS / Linux / HarmonyOS 四个 chip）、CTA 行
-   （GitHub 主按钮 + 鸿蒙版按钮 + ghost「How it works」）、trust 行（版本与验证状态）；
+   （GitHub 主按钮 + **Electron on HarmonyOS 版** + **HarmonyOS 版** + ghost「How it works」）、
+   trust 行（版本与验证状态，HarmonyOS 两个版别各一行）；
    右列视觉 —— 带边框的、随主题切换的应用截图 + mono caption。
 3. **Features**（`#features`）：标题 + lede + 4 张图标卡（桌面端 2×2，≤ 820px 单列）。
-4. **Platforms**（`#platforms`）：两张版本卡（tag + 能力 bullet + 仓库链接），下接覆盖声明。
+4. **Platforms**（`#platforms`）：**三张**版别卡（tag + 能力 bullet + 仓库链接；`grid-template-columns`
+   用 `repeat(3, 1fr)`，`≤1100px` 两列、`≤820px` 单列），下接覆盖声明。
 5. **How it works**（`#how`）：3 个带编号的步骤 + 箭头连接，结尾一个结果徽章。
-6. **Footer**：品牌 + 一句话 + ©/许可行 + 上游工程仓库链接
+6. **Footer**：品牌 + 一句话 + ©/许可行 + 仓库链接（Desktop / Electron on HarmonyOS / HarmonyOS 版 / Node 运行时库 / Workspace，再加上游 Pi、Pi Web 与 harmonypc-electron、Electron）
    （Pi、Pi Web、Electron、harmony-electron 运行时，与 `fellow99` 系列仓库并列）。
 
 EN / ZH **必须保持结构一致** —— 区块顺序、元素 class、交互行为永不分化；只有文案被翻译。
@@ -227,3 +234,4 @@ npx serve .        # 然后访问 http://localhost:3000/index.html
 | v1.1 | 2026-10-13 | 按 0.11.1 事实回写：§2 新增「分发状态」与「页面 CTA 口径」；事实表新增「发布产物」行，更正「桌面验证状态」（轮次 1–3）、「桌面已知不可用」（终端 / PTY ❌ → **✅ 可用**，并更正根因）、「分发与签名」、「托盘 / 原生通知」（通知 ✅ / 托盘 ⬜）；删除两个语言页平台卡中已失效的桌面 PTY 限制句；§2 护栏与 §9 维护清单同步更新。 |
 | v1.2 | 2026-10-13 | 评审回写：更正**鸿蒙真机口径** —— 原文写 `HarmonyOS 6.1.0.135 / API 24`（实为**参考工程**的版本，本项目文档明确标注其属 🔶 沿用），真机为 `HUAWEI MateBook Pro` / `HAD-W32` / `HAD-W24 7.0.0.107` / **API 26**（源：`pi-desktop-hos/docs/真机验证记录.md`）；同步改两页 hero 脚注与平台卡共 4 处（EN/ZH 结构 1:1 不变）；§2 与 §9 的「改事实的先后顺序」统一。自检：`file://` + headless Chrome —— 控制台零错误/零异常、仅 6 个同源文件请求、零外部请求、EN/ZH 结构骨架逐节点一致（204 = 204）、1280·768·390 三宽度无横向溢出。 |
 | v1.3 | 2026-10-16 | 按 0.12.1 事实回写：§2 版本行与「分发状态」、事实表 8 行（`pi-desktop` / `pi-desktop-hos` 版本、上游基线、上游补丁、桌面验证状态、鸿蒙验证状态、发布产物、分发与签名）、§2 页面 CTA 口径同步。**同时更正一处失实声明**：原「零上游改动 / zero upstream changes」对**鸿蒙版已不成立**——`pi-desktop-hos` 现有 2 条登记在案的上游补丁（`P203-1`、`PFIX-1`，2026-10-14/15 引入，晚于本文件 v1.2 的成文时间）；两页的 hero trust 行、能力卡、disclaimer、结果徽章与 meta description 一并改为「桌面版 0 条补丁 / 鸿蒙版 2 条登记补丁」的分版口径。 |
+| v1.4 | 2026-10-18 | **口径统一 + 新增第三个版别**：`pi-desktop-hos` 的对外定位名改为 **Electron on HarmonyOS Edition**（原「HarmonyOS 版」），空出来的 **HarmonyOS Edition** 留给 `pi-desktop-ark`（ArkWeb + 进程内 Node，不带 Electron）。两页的 title/meta、Hero CTA、trust 行、How-it-works 补丁口径、Platforms 卡与覆盖声明同步；Platforms 从两张卡扩到三张（样式改 `repeat(3,1fr)` + `≤1100px` 两列 + `≤820px` 单列）；`@fellow99/node-bridge` 链回仓库、页脚补 Node 运行时与 HarmonyOS 版两个仓库链接；§2 的「是什么 / 平台覆盖 / 当前版本」与 §3 的结构描述一并更新。 |
