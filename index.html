@@ -190,13 +190,15 @@
           <article class="platform-card">
             <div class="platform-head">
               <h3>Pi Desktop · HarmonyOS Edition</h3>
-              <span class="platform-tag">ArkWeb + in-process Node · 2-in-1 &amp; tablet</span>
+              <span class="platform-tag">ArkWeb + in-process Node · 2-in-1 / tablet / phone / TV</span>
             </div>
             <ul class="bullet-list">
               <li>No Chromium and no Electron: an ArkTS host whose <strong>ArkWeb</strong> view loads the local pi-web server, which runs on a real <strong>Node.js runtime inside the app process</strong> (<a href="https://github.com/fellow99/ohos-node-bridge" target="_blank" rel="noopener"><code>@fellow99/node-bridge</code></a>: <code>dlopen</code> + <code>node::Start</code>).</li>
               <li>Same in-process host and same origin as the Electron on HarmonyOS Edition — the difference is <em>which runtime provides Node</em>, and the payload is far smaller.</li>
-              <li>Host capabilities are explicit and attributable: permissions with next-step guidance, folder / file pickers, notifications, and a file-mailbox bridge between ArkTS and Node.</li>
-              <li>Verified on device — HUAWEI MateBook Pro (<code>HAD-W24</code>), HarmonyOS API 26; capability parity is tracked feature by feature in <code>docs/001-能力复刻评估.md</code>.</li>
+              <li><strong>The runtime mode is fixed at build time to compat (<code>--jitless</code>)</strong>: <code>2in1</code>, <code>tablet</code>, <code>phone</code> and <code>tv</code> all behave the same — no per-device distinction.</li>
+              <li><strong>No runtime switching, no setting for it.</strong> <code>--jitless</code> is a process-wide mode, an in-process Node starts once per process and a failed start is terminal — one wrong guess takes the whole app down. A jit variant means changing a build-time constant and rebuilding.</li>
+              <li><strong>compat disables code-mode</strong>: the JS sandbox needs WebAssembly and cannot coexist with <code>--jitless</code> (its self-test fails, so the tool is never registered). Everything else is unaffected — chat with streaming, image attachments and vision, the Git extension, file and shell tools, and the ArkWeb page itself.</li>
+              <li>Verified on device — HUAWEI MateBook Pro (<code>HAD-W24</code> / <code>HAD-W32</code>) and HUAWEI Enjoy 90 (<code>JUY-AL80</code>, phone), HarmonyOS API 26; capability parity is tracked feature by feature in <code>docs/001-能力复刻评估.md</code>.</li>
               <li>Known limitations: no terminal / PTY (the platform has no <code>devpts</code>); real JIT needs the <code>ALLOW_WRITABLE_CODE_MEMORY</code> ACL, otherwise the app runs <code>--jitless</code> and WebAssembly is unavailable.</li>
               <li>Status: v0.1.0 · scaffold + Phase 1 capabilities on device.</li>
             </ul>
