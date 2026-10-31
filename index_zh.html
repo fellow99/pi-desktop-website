@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pi Desktop — 把 Pi agent harness 装进桌面：Windows / macOS / Linux / HarmonyOS</title>
-  <meta name="description" content="Pi 的开源、非官方桌面壳：上游 Pi Web UI 原样复用，装进 Windows、macOS、Linux 的 Electron 应用；HarmonyOS 端有两个版别 —— Electron on HarmonyOS 版与 ArkWeb + 进程内 Node 的 HarmonyOS 版。本地优先、进程内宿主。" />
+  <title>Pi Desktop — 把 Pi agent harness 装进桌面：Windows / macOS / Linux / 鸿蒙 / 安卓</title>
+  <meta name="description" content="Pi 的开源、非官方桌面壳：上游 Pi Web UI 原样复用，装进 Windows、macOS、Linux 的 Electron 应用；鸿蒙端有两个版别（Electron on HarmonyOS 版、ArkWeb + 进程内 Node 的 HarmonyOS 版），另有一个基于系统 WebView + 进程内 Node 的 Android 版。本地优先、进程内宿主。" />
   <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f7f6" />
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#090d0b" />
   <script>
@@ -33,6 +33,7 @@
       <div class="nav-links">
         <a href="#features">功能</a>
         <a href="#platforms">平台</a>
+        <a href="#capabilities">能力对照</a>
         <a href="#how">工作原理</a>
       </div>
       <div class="nav-actions">
@@ -67,12 +68,13 @@
         <div class="hero-copy">
           <span class="eyebrow">开源 · MIT · 非官方的 Pi 桌面壳</span>
           <h1>让 Pi agent harness 在桌面安家。</h1>
-          <p class="lede">Pi Desktop 把上游的 Pi Web UI —— 原样不改 —— 装进 Windows、macOS、Linux 与 HarmonyOS 的原生外壳里。Pi 宿主和它的 Next.js 服务器跑在应用自身进程内，窗口从同一个源加载这套 UI：没有云端中转、没有 CORS、没有登录页，PATH 里也不需要 <code>pi</code> 二进制。你现有的会话、凭据与扩展照样可用。</p>
+          <p class="lede">Pi Desktop 把上游的 Pi Web UI —— 原样不改 —— 装进 Windows、macOS、Linux、鸿蒙与安卓的原生外壳里。Pi 宿主和它的 Next.js 服务器跑在应用自身进程内，窗口从同一个源加载这套 UI：没有云端中转、没有 CORS、没有登录页，PATH 里也不需要 <code>pi</code> 二进制。你现有的会话、凭据与扩展照样可用。</p>
           <ul class="os-strip" aria-label="支持的桌面平台">
             <li class="os-chip"><span class="os-dot" aria-hidden="true"></span>Windows</li>
             <li class="os-chip"><span class="os-dot" aria-hidden="true"></span>macOS</li>
             <li class="os-chip"><span class="os-dot" aria-hidden="true"></span>Linux</li>
-            <li class="os-chip"><span class="os-dot" aria-hidden="true"></span>HarmonyOS</li>
+            <li class="os-chip"><span class="os-dot" aria-hidden="true"></span>鸿蒙</li>
+            <li class="os-chip"><span class="os-dot" aria-hidden="true"></span>安卓</li>
           </ul>
           <div class="cta-row">
             <a class="btn btn-primary" href="https://github.com/fellow99/pi-desktop" target="_blank" rel="noopener">
@@ -87,6 +89,10 @@
               Electron on HarmonyOS 版
               <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
             </a>
+            <a class="btn btn-outline" href="https://github.com/fellow99/pi-desktop-android" target="_blank" rel="noopener">
+              Android 版
+              <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
+            </a>
             <a class="btn btn-ghost" href="#how">
               工作原理
               <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"></path></svg>
@@ -97,9 +103,11 @@
             <br>
             Electron on HarmonyOS<sup>(1)</sup> v0.12.1 · versionCode 1201 · 已构建、已签名、真机验证 · 2 条登记的上游补丁
             <br>
-            HarmonyOS 版 v0.1.0 · ArkWeb + 进程内 Node v24.2.0 · 已真机验证（<code>HAD-W24</code> / API 26）
+            HarmonyOS 版 v0.1.0 · ArkWeb + 进程内 Node v24.2.0 · 第 0 级真机已过（2in1 / 平板 / 手机，API 26）
             <br>
-            基于 pi v1.2.0 + pi-web v0.12.1 · 桌面版 0 条补丁 · 安装包未签名
+            Android 版 v0.12.1 · 系统 WebView + 进程内 Node v24.22.1 · 签名 APK 由 tag <code>v0.12.1</code> 发布到 GitHub Releases
+            <br>
+            基于 pi-web v0.12.1 · 桌面版 0 条补丁 · Electron on HarmonyOS 2 条 · HarmonyOS 6 条 · Android 6 条
             <br>
             <sup>(1)</sup>真机：HUAWEI MateBook Pro（<code>HAD-W32</code>），HarmonyOS API 26；2in1 与平板。
           </p>
@@ -130,7 +138,7 @@
               <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"></rect><path d="M16 5.5H6.5A2 2 0 0 0 4.5 7.5V17"></path></svg>
             </span>
             <h3>100% 上游 <a href="https://github.com/earendil-works/pi" target="_blank" rel="noopener">Pi</a> 与 <a href="https://github.com/agegr/pi-web" target="_blank" rel="noopener">Pi Web</a> —— SDK 与 UI 原样运行。</h3>
-            <p>Pi SDK 与 Pi Web UI 原样运行，壳只负责装配。桌面版 0 条补丁，上游的改进可以直接跟上，不必维护一个 fork 去 rebase。Electron on HarmonyOS 版有 2 条登记补丁；HarmonyOS 版以 5 条幂等可逆的补丁文件在构建期施加、随即回退，所有上游工作树始终保持 pristine。</p>
+            <p>Pi SDK 与 Pi Web UI 原样运行，壳只负责装配。桌面版 0 条补丁，上游的改进可以直接跟上，不必维护一个 fork 去 rebase。Electron on HarmonyOS 版有 2 条登记补丁；HarmonyOS 版施加 6 条、Android 版施加同构的 6 条 pi-web 补丁，均为构建期幂等可逆文件、随即回退，所有上游工作树始终保持 pristine。</p>
           </article>
 
           <article class="feature-card">
@@ -226,9 +234,78 @@
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
             </a>
           </article>
+
+          <article class="platform-card">
+            <div class="platform-head">
+              <h3>Pi Desktop · Android</h3>
+              <span class="platform-tag">系统 WebView + 进程内 Node · 手机 / 平板</span>
+            </div>
+            <ul class="bullet-list">
+              <li>不带 Chromium、也不带 Electron：Kotlin 宿主 + <strong>系统 WebView</strong> 加载本地 pi-web 服务，而该服务跑在<strong>应用进程内的真 Node.js 运行时</strong>上（<code>aosp-node-bridge</code> <strong>0.2.0</strong> + Maven Central <code>node-runtime</code> <strong>24.22.1</strong> small-ICU，<code>dlopen</code> 加载 <code>libnode.so</code>）。</li>
+              <li>与 HarmonyOS 版同一个「进程内 + 同源」形态 —— 差别在平台与 Node 引擎来源。</li>
+              <li>默认 <strong>JIT</strong> 形态（WASM 探针通过）；仅当 WebAssembly 缺失时才安装 <code>jitless/</code> 纯 JS 兼容层。</li>
+              <li>扩展随载荷分发：<code>android-exec</code>、<code>android-search</code>、<code>android-git</code>（isomorphic-git）、<code>android-pnpm</code>（进程内 vendored pnpm）、workspace-roots、SAF 等。</li>
+              <li>四版中唯一具备真<strong>前台服务</strong>后台保活；<code>127.0.0.1</code> 随机端口、loopback 免密、SAF 目录选择器。</li>
+              <li>引擎来源由 <code>verify-runtime.mjs</code> 对照 <code>runtime.lock.json</code> 门禁（SHA-256 + ELF 六项）；CI 再跑 <code>zipalign -P 16</code> 与合规门禁。</li>
+              <li>状态：tag <code>v0.12.1</code> 构建<strong>签名 APK</strong> 并发布 GitHub Release（APK + <code>.sha256</code>）；应用内版本仍为 0.1.0 / versionCode 1。</li>
+            </ul>
+            <a class="repo-link" href="https://github.com/fellow99/pi-desktop-android" target="_blank" rel="noopener">
+              在 GitHub 上查看
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </a>
+          </article>
         </div>
 
-        <p class="disclaimer">三个版别合起来覆盖四个桌面平台 —— Windows、Linux、macOS（Electron 版）加 HarmonyOS；HarmonyOS 端有<strong>两个</strong>独立版别：<strong>Electron on HarmonyOS 版</strong>（保留 Electron 运行时）与 <strong>HarmonyOS 版</strong>（ArkWeb + 内嵌 Node 运行时，不带 Electron）。三个独立的、非官方的开源壳，建立在 Pi 与 Pi Web 之上；桌面版无补丁，Electron on HarmonyOS 版有 2 条登记补丁，HarmonyOS 版有 5 条幂等补丁文件。与 Pi 或 Pi Web 作者无隶属关系，也未获其背书。目前均未做代码签名，Windows 上会出现 SmartScreen 提示，macOS 上会被 Gatekeeper 拦下。</p>
+        <p class="disclaimer">四个版别合起来覆盖 Windows、Linux、macOS（Electron 版），鸿蒙（端上有<strong>两个</strong>独立版别：保留 Electron 运行时的 <strong>Electron on HarmonyOS 版</strong>、用 ArkWeb + 内嵌 Node 的 <strong>HarmonyOS 版</strong>）与<strong>安卓</strong>（系统 WebView + 内嵌 Node）。四个建立在 Pi 与 Pi Web 之上的非官方开源壳；桌面版无补丁，Electron on HarmonyOS 版有 2 条登记补丁，HarmonyOS 版与 Android 版各有 6 条幂等补丁文件。与 Pi 或 Pi Web 作者无隶属关系，也未获其背书。桌面安装包未签名，Windows 上会出现 SmartScreen 提示、macOS 上会被 Gatekeeper 拦下；Android APK 为自签名。</p>
+      </div>
+    </section>
+
+    <!-- ========================= CAPABILITIES ========================== -->
+    <section id="capabilities" class="section">
+      <div class="container">
+        <p class="section-eyebrow">$ 能力对照清单</p>
+        <div class="section-head">
+          <h2>能力对照一览</h2>
+          <p class="section-lede">同一个上游 Pi Web，不同的运行时 —— 功能项仅显示状态图标。</p>
+        </div>
+        <div class="capability-wrap">
+          <table class="capability-table">
+            <thead>
+              <tr>
+                <th class="cap-feature">能力</th>
+                <th class="cap-status">Desktop</th>
+                <th class="cap-status">Android</th>
+                <th class="cap-status">HOS</th>
+                <th class="cap-status">Ark</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="cap-feature">流式对话 / SSE</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td></tr>
+              <tr><td class="cap-feature">模型 / Provider / 鉴权 UI</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td></tr>
+              <tr><td class="cap-feature">会话持久化与恢复</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td></tr>
+              <tr><td class="cap-feature">会话导出</td><td class="cap-status">✅</td><td class="cap-status">🔧</td><td class="cap-status">⚠️</td><td class="cap-status">🔧</td></tr>
+              <tr><td class="cap-feature">图片附件 / 视觉识图</td><td class="cap-status">✅</td><td class="cap-status">🔧</td><td class="cap-status">✅</td><td class="cap-status">✅</td></tr>
+              <tr><td class="cap-feature"><code>read</code> / <code>write</code> / <code>edit</code> / <code>ls</code></td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td></tr>
+              <tr><td class="cap-feature"><code>bash</code> 顶替 shell</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td></tr>
+              <tr><td class="cap-feature"><code>find</code> / <code>grep</code> 纯 JS 顶替</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td></tr>
+              <tr><td class="cap-feature">Git（isomorphic-git 扩展）</td><td class="cap-status">✅</td><td class="cap-status">🔧</td><td class="cap-status">🔧</td><td class="cap-status">🔧</td></tr>
+              <tr><td class="cap-feature">pnpm（进程内 vendored）</td><td class="cap-status">✅</td><td class="cap-status">🔧</td><td class="cap-status">❌</td><td class="cap-status">❌</td></tr>
+              <tr><td class="cap-feature">终端 / PTY 面板</td><td class="cap-status">✅</td><td class="cap-status">❌</td><td class="cap-status">❌</td><td class="cap-status">❌</td></tr>
+              <tr><td class="cap-feature">codemode（JS 沙箱）</td><td class="cap-status">✅</td><td class="cap-status">⬜</td><td class="cap-status">⚠️</td><td class="cap-status">❌</td></tr>
+              <tr><td class="cap-feature">MCP stdio（真实服务器）</td><td class="cap-status">✅</td><td class="cap-status">⚠️</td><td class="cap-status">⚠️</td><td class="cap-status">⚠️</td></tr>
+              <tr><td class="cap-feature">目录选择器</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">🔧</td></tr>
+              <tr><td class="cap-feature">用户目录访问</td><td class="cap-status">✅</td><td class="cap-status">⚠️</td><td class="cap-status">⚠️</td><td class="cap-status">🔧</td></tr>
+              <tr><td class="cap-feature">原生通知</td><td class="cap-status">✅</td><td class="cap-status">🔧</td><td class="cap-status">❌</td><td class="cap-status">🔧</td></tr>
+              <tr><td class="cap-feature">后台保活 / 前台服务</td><td class="cap-status">❌</td><td class="cap-status">✅</td><td class="cap-status">❌</td><td class="cap-status">❌</td></tr>
+              <tr><td class="cap-feature">检查更新（半自动）</td><td class="cap-status">✅</td><td class="cap-status">❌</td><td class="cap-status">❌</td><td class="cap-status">❌</td></tr>
+              <tr><td class="cap-feature">系统托盘</td><td class="cap-status">✅</td><td class="cap-status">➖</td><td class="cap-status">❌</td><td class="cap-status">❌</td></tr>
+              <tr><td class="cap-feature">外链交系统浏览器</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td></tr>
+              <tr><td class="cap-feature">项目信任门禁</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td></tr>
+              <tr><td class="cap-feature">对 pi-web v0.12.1 补丁数</td><td class="cap-status">0</td><td class="cap-status">6</td><td class="cap-status">2</td><td class="cap-status">6</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="capability-legend">✅ 源码在位且真机实测通过　·　🔧 源码在位（已实现 / 已装配），尚无真机实测记录　·　⚠️ 受限 / 部分可用　·　❌ 不可用或明确不做　·　⬜ 未实现 / 未实测　·　➖ 不适用</p>
       </div>
     </section>
 
@@ -288,6 +365,10 @@
         </a>
         <a href="https://github.com/fellow99/pi-desktop-ark" target="_blank" rel="noopener">
           HarmonyOS 版仓库
+          <svg class="ext" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
+        </a>
+        <a href="https://github.com/fellow99/pi-desktop-android" target="_blank" rel="noopener">
+          Android 版仓库
           <svg class="ext" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h7v7M21 3l-9 9M18 13v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h7"></path></svg>
         </a>
         <a href="https://github.com/fellow99/ohos-node-bridge" target="_blank" rel="noopener">
