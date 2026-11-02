@@ -99,15 +99,15 @@
             </a>
           </div>
           <p class="trust">
-            Desktop v0.12.1 · packaged end-to-end verified on Windows; macOS &amp; Linux pending
+            Desktop v0.13.0 · packaged end-to-end verified on Windows; macOS &amp; Linux pending
             <br>
-            Electron on HarmonyOS<sup>(1)</sup> v0.12.1 · versionCode 1201 · built, signed and verified on device · 2 registered upstream patches
+            Electron on HarmonyOS<sup>(1)</sup> v0.13.0 · versionCode 1300 · built, signed and verified on device · 2 registered upstream patches
             <br>
-            HarmonyOS Edition v0.1.0 · ArkWeb + in-process Node v24.2.0 · Level-0 verified on device (2-in-1 / tablet / phone, API 26)
+            HarmonyOS Edition v0.13.0 · ArkWeb + in-process Node v24.2.0 · Level-0 verified on device (2-in-1 / tablet / phone, API 26)
             <br>
-            Android Edition v0.12.1 · system WebView + in-process Node v24.22.1 · signed APK published to GitHub Releases from tag <code>v0.12.1</code>
+            Android Edition v0.13.0 · system WebView + in-process Node v26.13.0 · signed APK published to GitHub Releases from tag <code>v0.13.0</code>
             <br>
-            Built on pi-web v0.12.1 · desktop shell ships 0 patches · Electron on HarmonyOS 2 · HarmonyOS 6 · Android 6
+            Built on pi-web v0.13.0 · desktop shell ships 0 patches · Electron on HarmonyOS 2 · HarmonyOS 6 · Android 6
             <br>
             <sup>(1)</sup>Verified on a HUAWEI MateBook Pro (<code>HAD-W32</code>), HarmonyOS API 26; 2-in-1 and tablet.
           </p>
@@ -187,7 +187,7 @@
               <li>Random loopback port with a host-generated random password — credentials are injected, so the login page never appears.</li>
               <li>Ships <code>pi-dist.tar.gz</code>, extracted into <code>userData</code> on first launch and skipped afterwards (SHA-256 marker).</li>
               <li>Installers: Squirrel (Windows), DMG (macOS), deb / rpm / zip (Linux) — unsigned, so SmartScreen and Gatekeeper will ask.</li>
-              <li>Status: v0.12.1 · packaged end-to-end verified on Windows; macOS and Linux pending.</li>
+              <li>Status: v0.13.0 · packaged end-to-end verified on Windows; macOS and Linux pending.</li>
             </ul>
             <a class="repo-link" href="https://github.com/fellow99/pi-desktop" target="_blank" rel="noopener">
               View on GitHub
@@ -208,7 +208,7 @@
               <li><strong>compat disables code-mode</strong>: the JS sandbox needs WebAssembly and cannot coexist with <code>--jitless</code> (its self-test fails, so the tool is never registered). Everything else is unaffected — chat with streaming, image attachments and vision, the Git extension, file and shell tools, and the ArkWeb page itself.</li>
               <li>Verified on device — HUAWEI MateBook Pro (<code>HAD-W24</code> / <code>HAD-W32</code>) and HUAWEI Enjoy 90 (<code>JUY-AL80</code>, phone), HarmonyOS API 26; capability parity is tracked feature by feature in <code>docs/001-能力复刻评估.md</code>.</li>
               <li>Known limitations: no terminal / PTY (the platform has no <code>devpts</code>); real JIT needs the <code>ALLOW_WRITABLE_CODE_MEMORY</code> ACL, otherwise the app runs <code>--jitless</code> and WebAssembly is unavailable.</li>
-              <li>Status: v0.1.0 · scaffold + Phase 1 capabilities on device.</li>
+              <li>Status: v0.13.0 · scaffold + Phase 1 capabilities on device.</li>
             </ul>
             <a class="repo-link" href="https://github.com/fellow99/pi-desktop-ark" target="_blank" rel="noopener">
               View on GitHub
@@ -227,7 +227,7 @@
               <li>The full upstream Pi Web UI; sessions persist inside the app sandbox.</li>
               <li>Binds <code>0.0.0.0</code> and the window connects over the LAN IP, since HarmonyOS isolates loopback the other way.</li>
               <li>Known limitations: no terminal / PTY, no <code>git</code>, no ripgrep or fd binaries, plugin installs are local-source only.</li>
-              <li>Status: v0.12.1 · versionCode 1201.</li>
+              <li>Status: v0.13.0 · versionCode 1300.</li>
             </ul>
             <a class="repo-link" href="https://github.com/fellow99/pi-desktop-hos" target="_blank" rel="noopener">
               View on GitHub
@@ -241,13 +241,13 @@
               <span class="platform-tag">System WebView + in-process Node · phone / tablet</span>
             </div>
             <ul class="bullet-list">
-              <li>No Chromium and no Electron: a Kotlin host whose <strong>system WebView</strong> loads the local pi-web server, which runs on a real <strong>Node.js runtime inside the app process</strong> (<code>aosp-node-bridge</code> <strong>0.2.0</strong> + Maven Central <code>node-runtime</code> <strong>24.22.1</strong> small-ICU, <code>dlopen</code> of <code>libnode.so</code>).</li>
+              <li>No Chromium and no Electron: a Kotlin host whose <strong>system WebView</strong> loads the local pi-web server, which runs on a real <strong>Node.js runtime inside the app process</strong> (<code>aosp-node-bridge</code> <strong>0.2.0</strong> + Maven Central <code>node-runtime</code> <strong>26.13.0</strong> small-ICU, <code>dlopen</code> of <code>libnode.so</code>).</li>
               <li>Same in-process, same-origin model as the HarmonyOS Edition — the difference is the platform and the Node engine source.</li>
               <li>Default <strong>JIT</strong> runtime (WASM probe passes); the <code>jitless/</code> pure-JS layer installs only if WebAssembly is missing.</li>
               <li>Extensions ship in the payload: <code>android-exec</code>, <code>android-search</code>, <code>android-git</code> (isomorphic-git), <code>android-pnpm</code> (vendored in-process pnpm), workspace-roots, SAF and more.</li>
               <li>The only edition with a real <strong>foreground service</strong> for background keep-alive; <code>127.0.0.1</code> random port, loopback password-free, SAF directory picker.</li>
               <li>Engine provenance is gated by <code>verify-runtime.mjs</code> against <code>runtime.lock.json</code> (SHA-256 + ELF gates); CI then runs <code>zipalign -P 16</code> and the compliance gates.</li>
-              <li>Status: tag <code>v0.12.1</code> builds a <strong>signed APK</strong> and publishes a GitHub Release (APK + <code>.sha256</code>); in-app version remains 0.1.0 / versionCode 1.</li>
+              <li>Status: tag <code>v0.13.0</code> builds a <strong>signed APK</strong> and publishes a GitHub Release (APK + <code>.sha256</code>); in-app version 0.13.0 / versionCode 1300.</li>
             </ul>
             <a class="repo-link" href="https://github.com/fellow99/pi-desktop-android" target="_blank" rel="noopener">
               View on GitHub
@@ -301,7 +301,7 @@
               <tr><td class="cap-feature">System tray</td><td class="cap-status">✅</td><td class="cap-status">➖</td><td class="cap-status">❌</td><td class="cap-status">❌</td></tr>
               <tr><td class="cap-feature">External links → system browser</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td></tr>
               <tr><td class="cap-feature">Project trust gate</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td></tr>
-              <tr><td class="cap-feature">Patch count vs. pi-web v0.12.1</td><td class="cap-status">0</td><td class="cap-status">6</td><td class="cap-status">2</td><td class="cap-status">6</td></tr>
+              <tr><td class="cap-feature">Patch count vs. pi-web v0.13.0</td><td class="cap-status">0</td><td class="cap-status">6</td><td class="cap-status">2</td><td class="cap-status">6</td></tr>
             </tbody>
           </table>
         </div>
