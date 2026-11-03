@@ -99,15 +99,15 @@
             </a>
           </div>
           <p class="trust">
-            桌面版 v0.14.1 · Windows 打包态端到端已验收；macOS &amp; Linux 待验证
+            桌面版 v0.14.2 · Windows 打包态端到端已验收；macOS &amp; Linux 待验证
             <br>
-            Electron on HarmonyOS<sup>(1)</sup> v0.14.1 · versionCode 1401 · 本轮已构建（unsigned HAP，真机验证待续） · 2 条登记的上游补丁
+            Electron on HarmonyOS<sup>(1)</sup> v0.14.2 · versionCode 1402 · 本轮已构建（签名 HAP，真机启动/渲染/版本已验证） · 2 条登记的上游补丁
             <br>
-            HarmonyOS 版 v0.14.1 · ArkWeb + 进程内 Node v24.2.0 · 第 0 级真机已过（2in1 / 平板 / 手机，API 26）
+            HarmonyOS 版 v0.14.2 · ArkWeb + 进程内 Node v24.2.0 · 第 0 级真机已过（2in1 / 平板 / 手机，API 26）
             <br>
-            Android 版 v0.14.1 · 系统 WebView + 进程内 Node v26.13.0 · 签名 APK 由 tag <code>v0.14.1</code> 发布到 GitHub Releases
+            Android 版 v0.14.2 · 系统 WebView + 进程内 Node v26.13.0 · 签名 APK 由 tag <code>v0.14.2</code> 发布到 GitHub Releases
             <br>
-            基于 pi-web v0.14.1 · 桌面版 0 条补丁 · Electron on HarmonyOS 2 条 · HarmonyOS 6 条 · Android 6 条
+            基于 pi-web v0.14.2 · 桌面版 0 条补丁 · Electron on HarmonyOS 2 条 · HarmonyOS 6 条 · Android 6 条
             <br>
             <sup>(1)</sup>真机：HUAWEI MateBook Pro（<code>HAD-W32</code>），HarmonyOS API 26；2in1 与平板。
           </p>
@@ -187,7 +187,7 @@
               <li>随机 loopback 端口配宿主生成的随机强密码 —— 凭据由壳注入，登录页永不出现。</li>
               <li>随包分发 <code>pi-dist.tar.gz</code>，首启解压到 <code>userData</code>，之后按 SHA-256 marker 跳过。</li>
               <li>安装包：Squirrel（Windows）、DMG（macOS）、deb / rpm / zip（Linux）—— 未签名，SmartScreen 与 Gatekeeper 会拦。</li>
-              <li>状态：v0.14.1 · Windows 打包态端到端已验收；macOS 与 Linux 待验证。</li>
+              <li>状态：v0.14.2 · Windows 打包态端到端已验收；macOS 与 Linux 待验证。</li>
             </ul>
             <a class="repo-link" href="https://github.com/fellow99/pi-desktop" target="_blank" rel="noopener">
               在 GitHub 上查看
@@ -208,7 +208,7 @@
               <li><strong>compat 形态禁用 code-mode</strong>：代码沙箱依赖 WebAssembly，与 <code>--jitless</code> 互斥（自检即失败，工具不注册）。其余能力不受影响 —— 对话与流式输出、图片附件与视觉识图、Git 扩展、文件与 shell 工具、ArkWeb 页面渲染都正常。</li>
               <li>真机验证：HUAWEI MateBook Pro（<code>HAD-W24</code> / <code>HAD-W32</code>）与 华为畅享 90（<code>JUY-AL80</code>，phone），HarmonyOS API 26；能力对齐逐条记录在 <code>docs/001-能力复刻评估.md</code>。</li>
               <li>已知限制：无终端 / PTY（平台没有 <code>devpts</code>）；运行形态固定为 <code>--jitless</code>（compat），无需 JIT 类 ACL，仅 WebAssembly / code-mode 不可用。</li>
-              <li>状态：v0.14.1 · 本轮已构建（unsigned HAP，真机验证待续）；历史：0.12.x 骨架 + Phase 1 能力已真机可用。</li>
+              <li>状态：v0.14.2 · 本轮已构建（签名 HAP，真机启动/渲染/版本已验证）；历史：0.12.x 骨架 + Phase 1 能力已真机可用。</li>
             </ul>
             <a class="repo-link" href="https://github.com/fellow99/pi-desktop-ark" target="_blank" rel="noopener">
               在 GitHub 上查看
@@ -227,7 +227,7 @@
               <li>完整的上游 Pi Web UI；会话持久化在应用沙箱内。</li>
               <li>绑定 <code>0.0.0.0</code>，窗口经局域网 IP 连接 —— 因为鸿蒙对 loopback 做了网络隔离。</li>
               <li>已知限制：无终端 / PTY、无 <code>git</code>、无 ripgrep 与 fd 二进制、插件只能装本地源。</li>
-              <li>状态：v0.14.1 · versionCode 1401。</li>
+              <li>状态：v0.14.2 · versionCode 1402。</li>
             </ul>
             <a class="repo-link" href="https://github.com/fellow99/pi-desktop-hos" target="_blank" rel="noopener">
               在 GitHub 上查看
@@ -247,7 +247,7 @@
               <li>扩展随载荷分发：<code>android-exec</code>、<code>android-search</code>、<code>android-git</code>（isomorphic-git）、<code>android-pnpm</code>（进程内 vendored pnpm）、workspace-roots、SAF 等。</li>
               <li>四版中唯一具备真<strong>前台服务</strong>后台保活；<code>127.0.0.1</code> 随机端口、loopback 免密、SAF 目录选择器。</li>
               <li>引擎来源由 <code>verify-runtime.mjs</code> 对照 <code>runtime.lock.json</code> 门禁（SHA-256 + ELF 六项）；CI 再跑 <code>zipalign -P 16</code> 与合规门禁。</li>
-              <li>状态：tag <code>v0.14.1</code> 构建<strong>签名 APK</strong> 并发布 GitHub Release（APK + <code>.sha256</code>）；应用内版本 0.14.1 / versionCode 1401。</li>
+              <li>状态：tag <code>v0.14.2</code> 构建<strong>签名 APK</strong> 并发布 GitHub Release（APK + <code>.sha256</code>）；应用内版本 0.14.2 / versionCode 1402。</li>
             </ul>
             <a class="repo-link" href="https://github.com/fellow99/pi-desktop-android" target="_blank" rel="noopener">
               在 GitHub 上查看
@@ -301,7 +301,7 @@
               <tr><td class="cap-feature">系统托盘</td><td class="cap-status">✅</td><td class="cap-status">➖</td><td class="cap-status">❌</td><td class="cap-status">❌</td></tr>
               <tr><td class="cap-feature">外链交系统浏览器</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td></tr>
               <tr><td class="cap-feature">项目信任门禁</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td></tr>
-              <tr><td class="cap-feature">对 pi-web v0.14.1 补丁数</td><td class="cap-status">0</td><td class="cap-status">6</td><td class="cap-status">2</td><td class="cap-status">6</td></tr>
+              <tr><td class="cap-feature">对 pi-web v0.14.2 补丁数</td><td class="cap-status">0</td><td class="cap-status">6</td><td class="cap-status">2</td><td class="cap-status">6</td></tr>
             </tbody>
           </table>
         </div>
