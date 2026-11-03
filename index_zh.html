@@ -207,7 +207,7 @@
               <li><strong>运行期不提供任何形态切换</strong>，也没有设置项：<code>--jitless</code> 是进程级形态，而进程内 Node 每进程只能起一次、失败即终态，一次误判就是整机不可用；要 jit 变体只能在<strong>编译期</strong>改常量重新构建。</li>
               <li><strong>compat 形态禁用 code-mode</strong>：代码沙箱依赖 WebAssembly，与 <code>--jitless</code> 互斥（自检即失败，工具不注册）。其余能力不受影响 —— 对话与流式输出、图片附件与视觉识图、Git 扩展、文件与 shell 工具、ArkWeb 页面渲染都正常。</li>
               <li>真机验证：HUAWEI MateBook Pro（<code>HAD-W24</code> / <code>HAD-W32</code>）与 华为畅享 90（<code>JUY-AL80</code>，phone），HarmonyOS API 26；能力对齐逐条记录在 <code>docs/001-能力复刻评估.md</code>。</li>
-              <li>已知限制：无终端 / PTY（平台没有 <code>devpts</code>）；真 JIT 需要 <code>ALLOW_WRITABLE_CODE_MEMORY</code> ACL，否则只能 <code>--jitless</code>（WebAssembly 不可用）。</li>
+              <li>已知限制：无终端 / PTY（平台没有 <code>devpts</code>）；运行形态固定为 <code>--jitless</code>（compat），无需 JIT 类 ACL，仅 WebAssembly / code-mode 不可用。</li>
               <li>状态：v0.14.1 · 本轮已构建（unsigned HAP，真机验证待续）；历史：0.12.x 骨架 + Phase 1 能力已真机可用。</li>
             </ul>
             <a class="repo-link" href="https://github.com/fellow99/pi-desktop-ark" target="_blank" rel="noopener">

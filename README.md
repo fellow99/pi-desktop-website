@@ -99,7 +99,7 @@
 | 桌面已知不可用 | **无阻断项** —— 终端 / PTY 已在轮次 2 实测 **✅ 可用**（根因是**本机安装不完整的空壳 prebuilds**、触发上游 `prebuild.js` 误判，**不是**上游缺 `win32-x64` 产物；已修并加构建期守卫 `FR-010-027`）。仍为 ⬜ 的只有「系统托盘视觉呈现」 | `pi-desktop/docs/桌面能力清单.md` §A#1 / §A#8 |
 | Electron on HarmonyOS 版已知不可用 | 终端 / PTY ❌ · `git` ❌ · `rg`/`fd` ❌ · 插件联网安装 ❌ | `pi-desktop-hos/README.md` |
 | HarmonyOS 版验证状态 | **0.14.1 轮次：已构建（unsigned HAP，本机无真机，跳过真机验证）**；历史：0.12.x 轮次已构建、已签名、已真机验证（HUAWEI MateBook Pro `HAD-W24` / API 26）：进程内 Node `v24.2.0`、进程内 Next、ArkWeb 前端、文件信箱宿主桥、权限 / 选择器 / 通知 | `pi-desktop-ark/docs/001-能力复刻评估.md` |
-| HarmonyOS 版已知不可用 | 终端 / PTY ❌（无 `devpts`）· `git`/`rg`/`fd` ❌ · 插件联网安装 ❌ · 真 JIT 需 ACL，否则 `--jitless` 下 WASM 不可用 | `pi-desktop-ark/docs/001-能力复刻评估.md` §B |
+| HarmonyOS 版已知不可用 | 终端 / PTY ❌（无 `devpts`）· `git`/`rg`/`fd` ❌ · 插件联网安装 ❌ · 真 JIT ❌（运行形态固定 `--jitless`，**无需 ACL**，WASM/code-mode 不可用） | `pi-desktop-ark/docs/001-能力复刻评估.md` §B |
 | 发布产物 | `pi-desktop`：tag **`v0.14.1`**（`v0.11.1` 的 GitHub Release 有 9 个资产：Windows `Setup.exe` / `full.nupkg` / `RELEASES`、win32-x64 · darwin-arm64 · linux-x64 三个 zip、macOS `arm64.dmg`、`amd64.deb`、`x86_64.rpm`）；`pi-desktop-hos`：tag **`v0.14.1`**、**无 Release**（HAP 仅本地产出） | `git tag`、GitHub Release 页 `v0.11.1`、`pi-desktop-hos/README.md` |
 | 分发与签名 | 桌面版走 **GitHub Release**（tag `v0.14.1`；`v0.11.1` 时 CI / Release 流水线跑绿）；两个鸿蒙版别目前都只在本地产出 HAP。三者 v1 **不签名、不公证、不静默更新** | `pi-desktop/docs/发布与更新.md` §7 |
 | 托盘 / 原生通知 / 单实例 / 窗口状态记忆 | **原生通知 ✅ 已专项取证**（P0-5：聚焦不弹 · 最小化弹出延迟 **2054 ms** · 同会话 **10 s 冷却去重** · 冷却后可再弹 · 启动不补弹 = 5 PASS / 0 FAIL）；系统**托盘视觉呈现 ⬜ 未取证**（O7）；单实例与窗口状态记忆为代码已实现并随包构建 | `pi-desktop/src/main/{tray,notifications,window-state}.ts`、`pi-desktop/docs/桌面能力清单.md` §A#7 / §A#8 / §A#12 / §A#13 |
