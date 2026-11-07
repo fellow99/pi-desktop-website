@@ -244,7 +244,9 @@
               <li>不带 Chromium、也不带 Electron：Kotlin 宿主 + <strong>系统 WebView</strong> 加载本地 pi-web 服务，而该服务跑在<strong>应用进程内的真 Node.js 运行时</strong>上（<code>aosp-node-bridge</code> <strong>0.2.0</strong> + Maven Central <code>node-runtime</code> <strong>26.13.0</strong> small-ICU，<code>dlopen</code> 加载 <code>libnode.so</code>）。</li>
               <li>与 HarmonyOS 版同一个「进程内 + 同源」形态 —— 差别在平台与 Node 引擎来源。</li>
               <li>默认 <strong>JIT</strong> 形态（WASM 探针通过）；仅当 WebAssembly 缺失时才安装 <code>jitless/</code> 纯 JS 兼容层。</li>
-              <li>扩展随载荷分发：<code>android-exec</code>、<code>android-search</code>、<code>android-git</code>（isomorphic-git）、<code>android-pnpm</code>（进程内 vendored pnpm）、workspace-roots、SAF 等。</li>
+              <li>真实终端 shell 是 <strong>mksh</strong>（login <code>sh -l</code>）。PATH 上预置 <strong>五个真实交叉编译 CLI</strong>：<a href="https://github.com/fellow99/node-bridge-workspace" target="_blank" rel="noopener">git、node、npm、pnpm、python、pip、uv</a>（<code>.profile</code> 函数）；系统内置命令含 toybox、<code>awk</code>/<code>sed</code>/<code>tr</code>、<code>tar</code>/<code>gzip</code>、<code>sha256sum</code>、<code>curl</code>、<code>ping</code>、<code>pm</code>、<code>getprop</code>、<code>logcat</code>。纯 JS 的 <code>android-git</code>（isomorphic-git）与进程内 <code>android-pnpm</code> 扩展已于 112 移除，git/pnpm 改走真实二进制（无 gcc/make，故无 node-gyp 原生与 pip sdist 编译）。</li>
+              <li>PTY 终端面板已<strong>产品化</strong>（node-pty 1.1.0，<code>/api/terminal</code> supported）兼容普通 shell。</li>
+              <li>扩展随载荷分发：<code>android-exec</code>、<code>android-search</code>、<code>android-pty</code>、workspace-roots、SAF 等。</li>
               <li>四版中唯一具备真<strong>前台服务</strong>后台保活；<code>127.0.0.1</code> 随机端口、loopback 免密、SAF 目录选择器。</li>
               <li>引擎来源由 <code>verify-runtime.mjs</code> 对照 <code>runtime.lock.json</code> 门禁（SHA-256 + ELF 六项）；CI 再跑 <code>zipalign -P 16</code> 与合规门禁。</li>
               <li>状态：tag <code>v0.15.0</code> 构建<strong>签名 APK</strong> 并发布 GitHub Release（APK + <code>.sha256</code>）；应用内版本 0.15.0 / versionCode 1500。</li>
@@ -288,9 +290,9 @@
               <tr><td class="cap-feature"><code>read</code> / <code>write</code> / <code>edit</code> / <code>ls</code></td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td></tr>
               <tr><td class="cap-feature"><code>bash</code> 顶替 shell</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td></tr>
               <tr><td class="cap-feature"><code>find</code> / <code>grep</code> 纯 JS 顶替</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td></tr>
-              <tr><td class="cap-feature">Git（isomorphic-git 扩展）</td><td class="cap-status">✅</td><td class="cap-status">🔧</td><td class="cap-status">🔧</td><td class="cap-status">🔧</td></tr>
-              <tr><td class="cap-feature">pnpm（进程内 vendored）</td><td class="cap-status">✅</td><td class="cap-status">🔧</td><td class="cap-status">❌</td><td class="cap-status">❌</td></tr>
-              <tr><td class="cap-feature">终端 / PTY 面板</td><td class="cap-status">✅</td><td class="cap-status">❌</td><td class="cap-status">❌</td><td class="cap-status">❌</td></tr>
+              <tr><td class="cap-feature">Git（isomorphic-git 扩展）</td><td class="cap-status">✅</td><td class="cap-status">🔧</td><td class="cap-status">🔧</td><td class="cap-status">✅</td></tr>
+              <tr><td class="cap-feature">pnpm（进程内 vendored）</td><td class="cap-status">✅</td><td class="cap-status">🔧</td><td class="cap-status">❌</td><td class="cap-status">✅</td></tr>
+              <tr><td class="cap-feature">终端 / PTY 面板</td><td class="cap-status">✅</td><td class="cap-status">❌</td><td class="cap-status">❌</td><td class="cap-status">✅</td></tr>
               <tr><td class="cap-feature">codemode（JS 沙箱）</td><td class="cap-status">✅</td><td class="cap-status">⬜</td><td class="cap-status">⚠️</td><td class="cap-status">❌</td></tr>
               <tr><td class="cap-feature">MCP stdio（真实服务器）</td><td class="cap-status">✅</td><td class="cap-status">⚠️</td><td class="cap-status">⚠️</td><td class="cap-status">⚠️</td></tr>
               <tr><td class="cap-feature">目录选择器</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">🔧</td></tr>
