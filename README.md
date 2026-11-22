@@ -39,24 +39,24 @@
   ZH「让 Pi agent harness 在桌面安家」。
 - **四平台覆盖是标题级差异点** —— Windows、Linux、macOS（Electron 版）+ HarmonyOS + Android。
   它出现在：Hero 的 lede、lede 下的五个系统 chip（`ul.os-strip`）、**四张**平台卡、平台区声明。
-- **卖点（能力卡）**：100% 官方 Pi / Pi Web、**上游补丁分版计**（`pi-desktop` **0 条**；`pi-desktop-hos` / Electron on HarmonyOS 版 **2 条**登记补丁 —— `P203-1`「选择工作区目录」、`PFIX-1`「会话导出进程内回退」；`pi-desktop-ark` / HarmonyOS 版 **6 条**幂等可逆补丁文件；`pi-desktop-android` / Android 版 **6 条**同构补丁）· 本地优先、进程内宿主 ·
+- **卖点（能力卡）**：100% 官方 Pi / Pi Web、**上游补丁分版计**（`pi-desktop` **1 条**；`pi-desktop-hos` / Electron on HarmonyOS 版 **4 条**登记补丁 —— `P203-1`「选择工作区目录」、`PFIX-1`「会话导出进程内回退」、系统返回、中枢服务设置分区；`pi-desktop-ark` / HarmonyOS 版 **7 条**幂等可逆补丁文件；`pi-desktop-android` / Android 版 **7 条**同构补丁）· 本地优先、进程内宿主 ·
   桌面公民（托盘 / 原生通知 / 单实例 / 窗口状态记忆）· 与 `pi` CLI 共用同一套运行环境。
 - **架构故事（How it works）**：进程内宿主 → 同源 UI → 官方数据面（`fetch('/api/*')` 上行 +
   SSE 下行），收尾徽章「No CORS · No custom protocol · No login page.」（与两页现文案一致；旧描述里的「· Zero upstream patches」已按 v1.3 的分版补丁口径删除，补丁口径改由 hero trust 行**分版**表述）。
 - **配套工程**：`pi-agent-hub`（父工程 `pi-workspace` 的同级 submodule）—— 不是第五种版别，而是把各 agent
   （`pi` / `opencode` / `deepseek-harness`）在自己机器上的会话汇总到一处只读中心、并可从控制台把一条消息经 SSE
   下发回指定会话的独立服务；页面以独立栏目 `#hub` 介绍，并在声明中明确「不改写存档、只在各 agent 自身接口上动手」。
-- **当前版本**：`pi-desktop` **v0.17.0** · `pi-desktop-hos` **v0.17.0**（`versionCode` 1700）·
-  `pi-desktop-ark` **v0.17.0**（`versionCode` 1700）·
-  `pi-desktop-android` 应用内 **v0.17.0**（`versionCode` 1700；进程内 Node 26.13.0）；四个版别共同的上游载荷是 **pi-web v0.17.0**（`pi` v1.5.2）。
+- **当前版本**：`pi-desktop` **v0.18.0** · `pi-desktop-hos` **v0.18.0**（`versionCode` 1800）·
+  `pi-desktop-ark` **v0.18.0**（`versionCode` 1800）·
+  `pi-desktop-android` 应用内 **v0.18.0**（`versionCode` 1800；进程内 Node 26.13.0）；四个版别共同的上游载荷是 **pi-web v0.18.0**（`pi` v1.6.0）。
   改版本号时，本站文案、下面的事实表、以及四个产品 README 必须一起改。
-- **分发状态**：`pi-desktop` 本轮打 tag **`v0.17.0`**（之前的 `v0.15.0` 已发布；`v0.11.1` 曾在 GitHub Release 发布 **9 个资产**：
+- **分发状态**：`pi-desktop` 本轮打 tag **`v0.18.0`**（之前的 `v0.15.0` 已发布；`v0.11.1` 曾在 GitHub Release 发布 **9 个资产**：
   Windows `Setup.exe` + `full.nupkg` + `RELEASES`、win32-x64 / darwin-arm64 / linux-x64 三个 zip、
   macOS `arm64.dmg`、`amd64.deb`、`x86_64.rpm`，CI 与 Release 流水线当时均已跑绿）；
   填写本轮 tag 触发 `release.yml` 产出；
-  `pi-desktop-hos` 本轮打 tag **`v0.17.0`**，但**无 Release**（HAP 本地产出、未签名 —— 签名与真机复验待后续处理）；0.15.0 签名 HAP 已在鸿蒙真机验证启动/渲染/版本徽标、DeepSeek Key、沙箱工作区、文本对话与图片分析对话；
-  `pi-desktop-ark` 本轮打 tag **`v0.17.0`**，同样**无 Release**（HAP 本地产出、未签名）；0.15.0 签名 HAP 已在鸿蒙真机验证启动/渲染/版本徽标、设备侧真实模型调用套件 2/2；
-  `pi-desktop-android` 本轮打 tag **`v0.17.0`**（应用内 0.17.0 / 1700）；0.15.0 tag 曾由 `build-release.yml` 构建**签名 APK 并发布 GitHub Release**（APK + `.sha256`）。
+  `pi-desktop-hos` 本轮打 tag **`v0.18.0`**，但**无 Release**（HAP 本地产出、未签名 —— 签名与真机复验待后续处理）；0.15.0 签名 HAP 已在鸿蒙真机验证启动/渲染/版本徽标、DeepSeek Key、沙箱工作区、文本对话与图片分析对话；
+  `pi-desktop-ark` 本轮打 tag **`v0.18.0`**，同样**无 Release**（HAP 本地产出、未签名）；0.15.0 签名 HAP 已在鸿蒙真机验证启动/渲染/版本徽标、设备侧真实模型调用套件 2/2；
+  `pi-desktop-android` 本轮打 tag **`v0.18.0`**（应用内 0.18.0 / 1800）；0.15.0 tag 曾由 `build-release.yml` 构建**签名 APK 并发布 GitHub Release**（APK + `.sha256`）。
   ⚠️ 桌面/HarmonyOS 页面**尚未**因此新增下载入口 —— 见下方「页面 CTA 口径」与 §9 待办。
 
 
@@ -69,7 +69,7 @@
 - **绝不虚构能力**：页面上不出现自动更新、代码签名、公证、商店分发、「官方产品」这类说法 ——
   两个壳都是**独立的、非官方的**开源工程，建立在 Pi 与 Pi Web 之上，
   **与上游作者无隶属关系、未获其背书**。
-- **页面 CTA 口径**：`pi-desktop` 现在**已有** tag `v0.17.0`（`v0.11.1` 的 GitHub Release 有 9 资产），但
+- **页面 CTA 口径**：`pi-desktop` 现在**已有** tag `v0.18.0`（`v0.11.1` 的 GitHub Release 有 9 资产），但
   页面 CTA **仍一律指向 GitHub 仓库**、**不出现"下载安装包"入口** —— 是否改成直接指向 Release
   下载页属**待办 ⬜**（见 §9），本文件只登记事实、不擅自改页面。`pi-desktop-hos` 有 tag 无 Release，
   其 CTA 只能指向仓库；trust 行只说"版本号是多少、验证到哪一步"。
@@ -89,22 +89,22 @@
 
 | 事实 | 值 | 来源 |
 |---|---|---|
-| `pi-desktop` 版本 | **v0.17.0** | `pi-desktop/package.json` |
+| `pi-desktop` 版本 | **v0.18.0** | `pi-desktop/package.json` |
 | 桌面运行时 | Electron **43.7.9**（Node 24.21.0 / Chromium 150.0.7871.250 / ABI 148） | `pi-desktop/README.md`、`upstream.lock.json` |
-| `pi-desktop-hos`（Electron on HarmonyOS 版）版本 | **v0.17.0** / `versionCode` **1700** | `pi-desktop-hos/AppScope/app.json5` |
-| `pi-desktop-ark`（HarmonyOS 版）版本 | **v0.17.0** / `versionCode` **1700** | `pi-desktop-ark/AppScope/app.json5` |
-| `pi-desktop-android`（Android 版） | 应用内 **v0.17.0** / `versionCode` **1700**；进程内 Node **26.13.0**（small-ICU，Maven Central `node-runtime` + `aosp-node-bridge` 0.2.0）；签名 APK 经 CI 发布 GitHub Release | `pi-desktop-android/app/build.gradle.kts`、`runtime.lock.json`、`.github/workflows/build-release.yml` |
+| `pi-desktop-hos`（Electron on HarmonyOS 版）版本 | **v0.18.0** / `versionCode` **1800** | `pi-desktop-hos/AppScope/app.json5` |
+| `pi-desktop-ark`（HarmonyOS 版）版本 | **v0.18.0** / `versionCode` **1800** | `pi-desktop-ark/AppScope/app.json5` |
+| `pi-desktop-android`（Android 版） | 应用内 **v0.18.0** / `versionCode` **1800**；进程内 Node **26.13.0**（small-ICU，Maven Central `node-runtime` + `aosp-node-bridge` 0.2.0）；签名 APK 经 CI 发布 GitHub Release | `pi-desktop-android/app/build.gradle.kts`、`runtime.lock.json`、`.github/workflows/build-release.yml` |
 | 鸿蒙运行时 | Electron-on-鸿蒙 **37.2.3**（Node 22.17.0 / ABI 138） | `pi-desktop-hos/README.md` |
-| 上游基线 | `pi` **v1.5.2** + `pi-web` **v0.17.0** | `pi-desktop/upstream.lock.json`、各工程的 README 文档头 |
-| 上游补丁 | `pi-desktop` **0 条**；`pi-desktop-hos` **3 条**（`P203-1` 四主目录「选择工作区目录」、`PFIX-1` 会话导出进程内回退、系统返回 113）；`pi-desktop-ark` **6 条**；`pi-desktop-android` **6 条**（与 ark 同构）——均按被 patch 的上游 tag 分目录登记、构建脚本幂等应用、构建结束即回退，上游工作树保持 pristine | `pi-desktop-hos/patches/README.md`、`pi-desktop-ark/patches/v0.17.0/`、`pi-desktop-android/patches/v0.17.0/` |
+| 上游基线 | `pi` **v1.6.0** + `pi-web` **v0.18.0** | `pi-desktop/upstream.lock.json`、各工程的 README 文档头 |
+| 上游补丁 | `pi-desktop` **1 条**（中枢服务设置分区）；`pi-desktop-hos` **4 条**（`P203-1` 四主目录「选择工作区目录」、`PFIX-1` 会话导出进程内回退、系统返回 113、中枢服务设置分区）；`pi-desktop-ark` **7 条**；`pi-desktop-android` **7 条**（与 ark 同构）——均按被 patch 的上游 tag 分目录登记、构建脚本幂等应用、构建结束即回退，上游工作树保持 pristine | `pi-desktop-hos/patches/README.md`、`pi-desktop-ark/patches/v0.18.0/`、`pi-desktop-android/patches/v0.18.0/` |
 | 桌面验证状态 | **Windows 打包态端到端已验收**（0.15.0 轮次：`smoke-desktop` 10 PASS / 0 FAIL + 打包态基本功能 e2e **11 PASS / 0 FAIL**（API KEY → 沙箱凭据 → 沙箱工作区 → 真实文本对话 → 视觉图片对话 → `/api/app-update` currentVersion=0.15.0）+ 打包态 `probe-renderer` **7 PASS / 0 FAIL**；历史轮次见构建验证记录）；**macOS / Linux 待验证** | `pi-desktop/logs/20261015-1/`、`pi-desktop/docs/构建验证记录.md` |
 | Electron on HarmonyOS 版验证状态 | **0.15.0 轮次：签名 HAP 已真机部署验证**（启动/进程/渲染/版本徽标 `web 0.15.0 · pi 1.5.0`、DeepSeek Key 落沙箱 `auth.json`、沙箱测试目录工作区、真实文本对话、图片分析对话——附件经 UI 输入到达会话且模型侧识图成功）；历史：0.13.0 轮次已构建、已签名、已真机验证（API KEY 落沙箱 `mode=600`、沙箱内工作区目录、一次真实对话与会话 JSONL 落盘、SWC 走内置 WASM 零下载）；设备 HUAWEI MateBook Pro `HAD-W32` / HarmonyOS **API 26** | `pi-desktop-hos/docs/真机验证记录.md` |
 | 桌面已知不可用 | **无阻断项** —— 终端 / PTY 已在轮次 2 实测 **✅ 可用**（根因是**本机安装不完整的空壳 prebuilds**、触发上游 `prebuild.js` 误判，**不是**上游缺 `win32-x64` 产物；已修并加构建期守卫 `FR-010-027`）。仍为 ⬜ 的只有「系统托盘视觉呈现」 | `pi-desktop/docs/桌面能力清单.md` §A#1 / §A#8 |
 | Electron on HarmonyOS 版已知不可用 | 终端 / PTY ❌ · `git` ❌ · `rg`/`fd` ❌ · 插件联网安装 ❌ | `pi-desktop-hos/README.md` |
 | HarmonyOS 版验证状态 | **0.15.0 轮次：签名 HAP 已真机部署 + 设备用例通道 `model` 套件 2/2**（真实 DeepSeek 非流式 + 流式 SSE，compat 形态；版本徽标 `web 0.15.0 · pi 1.5.0`）；历史：0.12.x 轮次已构建、已签名、已真机验证（HUAWEI MateBook Pro `HAD-W24` / API 26）：进程内 Node `v24.2.0`、进程内 Next、ArkWeb 前端、文件信箱宿主桥、权限 / 选择器 / 通知 | `pi-desktop-ark/docs/001-能力复刻评估.md` |
 | HarmonyOS 版已知不可用 | 终端 / PTY ❌（无 `devpts`）· `git`/`rg`/`fd` ❌ · 插件联网安装 ❌ · 真 JIT ❌（运行形态固定 `--jitless`，**无需 ACL**，WASM/code-mode 不可用） | `pi-desktop-ark/docs/001-能力复刻评估.md` §B |
-| 发布产物 | `pi-desktop`：tag **`v0.17.0`**（`v0.11.1` 的 GitHub Release 有 9 个资产：Windows `Setup.exe` / `full.nupkg` / `RELEASES`、win32-x64 · darwin-arm64 · linux-x64 三个 zip、macOS `arm64.dmg`、`amd64.deb`、`x86_64.rpm`）；`pi-desktop-hos`：tag **`v0.17.0`**、**无 Release**（HAP 仅本地产出） | `git tag`、GitHub Release 页 `v0.11.1`、`pi-desktop-hos/README.md` |
-| 分发与签名 | 桌面版走 **GitHub Release**（tag `v0.17.0`；`v0.11.1` 时 CI / Release 流水线跑绿）；两个鸿蒙版别目前都只在本地产出 HAP。三者 v1 **不签名、不公证、不静默更新** | `pi-desktop/docs/发布与更新.md` §7 |
+| 发布产物 | `pi-desktop`：tag **`v0.18.0`**（`v0.11.1` 的 GitHub Release 有 9 个资产：Windows `Setup.exe` / `full.nupkg` / `RELEASES`、win32-x64 · darwin-arm64 · linux-x64 三个 zip、macOS `arm64.dmg`、`amd64.deb`、`x86_64.rpm`）；`pi-desktop-hos`：tag **`v0.18.0`**、**无 Release**（HAP 仅本地产出） | `git tag`、GitHub Release 页 `v0.11.1`、`pi-desktop-hos/README.md` |
+| 分发与签名 | 桌面版走 **GitHub Release**（tag `v0.18.0`；`v0.11.1` 时 CI / Release 流水线跑绿）；两个鸿蒙版别目前都只在本地产出 HAP。三者 v1 **不签名、不公证、不静默更新** | `pi-desktop/docs/发布与更新.md` §7 |
 | 托盘 / 原生通知 / 单实例 / 窗口状态记忆 | **原生通知 ✅ 已专项取证**（P0-5：聚焦不弹 · 最小化弹出延迟 **2054 ms** · 同会话 **10 s 冷却去重** · 冷却后可再弹 · 启动不补弹 = 5 PASS / 0 FAIL）；系统**托盘视觉呈现 ⬜ 未取证**（O7）；单实例与窗口状态记忆为代码已实现并随包构建 | `pi-desktop/src/main/{tray,notifications,window-state}.ts`、`pi-desktop/docs/桌面能力清单.md` §A#7 / §A#8 / §A#12 / §A#13 |
 | 与 `pi` CLI 共用 `~/.pi/agent` | 默认共享；设置内可切 `<userData>/pi-agent`（切换后需重启） | `pi-desktop/README.md`、`pi-desktop/docs/桌面能力清单.md` §A#14 |
 | 站点仓库 | <https://github.com/fellow99/pi-desktop-website> | `git remote -v` |
