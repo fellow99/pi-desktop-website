@@ -33,6 +33,7 @@
       <div class="nav-links">
         <a href="#features">功能</a>
         <a href="#platforms">平台</a>
+        <a href="#hub">pi-agent-hub</a>
         <a href="#capabilities">能力对照</a>
         <a href="#how">工作原理</a>
       </div>
@@ -259,6 +260,42 @@
         </div>
 
         <p class="disclaimer">四个版别合起来覆盖 Windows、Linux、macOS（Electron 版），鸿蒙（端上有<strong>两个</strong>独立版别：保留 Electron 运行时的 <strong>Electron on HarmonyOS 版</strong>、用 ArkWeb + 内嵌 Node 的 <strong>HarmonyOS 版</strong>）与<strong>安卓</strong>（系统 WebView + 内嵌 Node）。四个建立在 Pi 与 Pi Web 之上的非官方开源壳；桌面版无补丁，Electron on HarmonyOS 版有 3 条登记补丁，HarmonyOS 版与 Android 版各有 6 条幂等补丁文件。与 Pi 或 Pi Web 作者无隶属关系，也未获其背书。桌面安装包未签名，Windows 上会出现 SmartScreen 提示、macOS 上会被 Gatekeeper 拦下；Android APK 为自签名。</p>
+      </div>
+    </section>
+
+    <!-- =========================== PI-AGENT-HUB ========================== -->
+    <section id="hub" class="section">
+      <div class="container">
+        <p class="section-eyebrow">$ 桌面之外</p>
+        <div class="section-head">
+          <h2>pi-agent-hub —— 把各 agent 的会话收到一处</h2>
+          <p class="section-lede">同一 workspace 里的配套工程：把散在各台机器上各 agent 的会话汇总成一个只读中心，也能从那里把一条消息发回指定会话。</p>
+        </div>
+
+        <div class="platform-grid">
+          <article class="platform-card">
+            <div class="platform-head">
+              <h3>pi-agent-hub</h3>
+              <span class="platform-tag">Node 22.19+ · Express 5 · node:sqlite · Vue 3 · Tauri · v0.1.2</span>
+            </div>
+            <ul class="bullet-list">
+              <li><strong>每台机器一个 daemon，每个 agent 一个插件。</strong> Node 子进程直读各 agent 自己的会话存档 —— <code>pi</code>（JSONL）、<code>opencode</code>（serve HTTP 或 CLI）、<code>deepseek-harness</code>（zstd JSONL）—— 并归一为 <strong>pi session format v3</strong>。插件崩溃不会拖垮 daemon。</li>
+              <li><strong>增量且可续传。</strong> <code>manifest → 时间戳差分 → REST 同步</code>：hub 按会话返回水位，daemon 只发更新的部分；<code>hubSessionId</code> 确定性派生，重复采集天然幂等。大负载走 gzip upload 流。</li>
+              <li><strong>镜像就是 pi 自己的格式。</strong> <code>hub-service</code>（Express 5 + <code>node:sqlite</code>）合并进 pi v3 JSONL 镜像 —— <code>pi</code> 本体可直接读取 —— 旁边再加一份可重建的 SQLite 索引。</li>
+              <li><strong>自研只读查看器，不用 <code>pi-web</code>。</strong> Vue 3 控制台展示 项目 → <code>host|agent</code> → 会话树、带工具调用 / 图片 / 子 agent 的正文，以及下发状态。会话内容路由全是 <code>GET</code>，没有编辑或删除接口。</li>
+              <li><strong>受控下发。</strong> 选好主机、agent 与会话后，经 SSE 推送一条消息 —— 可带图片、模型与思考深度。daemon 交给 agent <em>自身</em>接口执行（pi RPC、pi-web HTTP、opencode HTTP 或 CLI、dsh RPC），从不改写存档。</li>
+              <li><strong>只读浏览工程目录。</strong> 控制台可逐层浏览远端工程目录，靠两道白名单（hub 侧路径校验，daemon 侧 <code>realpath</code> + <code>fsAllowedDirs</code> 终判）。只列目录、只读文件，不写。</li>
+              <li><strong>自托管、体积小。</strong> 一份配置里两个角色（<code>admin</code> / <code>viewer</code>）加上每主机一个 daemon token；服务端一份 Docker Compose（hub + console + nginx），Windows / macOS 用 Tauri 托盘，Linux 用 <code>pm2</code>。</li>
+              <li><strong>状态 v0.1.2（MIT）。</strong> 会话汇总、查看器、消息下发、目录浏览、模型信息已端到端可用；一次性会话导入尚未接线，搜索只有 title/cwd 子串，保留期 GC / 审计 / SSE 补发仍待做。</li>
+            </ul>
+            <a class="repo-link" href="https://github.com/fellow99/pi-agent-hub" target="_blank" rel="noopener">
+              在 GitHub 上查看
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </a>
+          </article>
+        </div>
+
+        <p class="disclaimer">pi-agent-hub 是同一 workspace 里的<strong>独立配套工程</strong> —— 不是第五种桌面版别，也不在上面那条共享数据面上：它读取各 agent 自己写下的会话存档，回写只经各 agent 自身接口，从不直接改存档。MIT 许可、非官方，与 Pi 或 Pi Web 作者无隶属关系，也未获其背书。</p>
       </div>
     </section>
 

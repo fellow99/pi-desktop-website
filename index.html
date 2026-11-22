@@ -33,6 +33,7 @@
       <div class="nav-links">
         <a href="#features">Features</a>
         <a href="#platforms">Platforms</a>
+        <a href="#hub">pi-agent-hub</a>
         <a href="#capabilities">Capabilities</a>
         <a href="#how">How it works</a>
       </div>
@@ -259,6 +260,42 @@
         </div>
 
         <p class="disclaimer">Together, the four editions cover Windows, Linux and macOS (Electron), HarmonyOS (where <strong>two</strong> independent editions ship: <strong>Electron on HarmonyOS</strong> keeping the Electron runtime and <strong>HarmonyOS</strong> using ArkWeb with an embedded Node runtime) and <strong>Android</strong> (system WebView with an embedded Node runtime). Four unofficial open-source shells built on Pi and Pi Web; the desktop shell is patch-free, the Electron on HarmonyOS Edition carries 3 registered patches, and the HarmonyOS and Android Editions each carry 6 idempotent patch files. Not affiliated with, or endorsed by, the Pi or Pi Web authors. The desktop installers are unsigned, so expect a SmartScreen prompt on Windows and Gatekeeper on macOS; the Android APK is self-signed.</p>
+      </div>
+    </section>
+
+    <!-- =========================== PI-AGENT-HUB ========================== -->
+    <section id="hub" class="section">
+      <div class="container">
+        <p class="section-eyebrow">$ beyond the desktop</p>
+        <div class="section-head">
+          <h2>pi-agent-hub — every agent's sessions, in one place</h2>
+          <p class="section-lede">A companion project from the same workspace: the sessions your agents accumulate on each machine, gathered into one read-only hub you can also send a prompt from.</p>
+        </div>
+
+        <div class="platform-grid">
+          <article class="platform-card">
+            <div class="platform-head">
+              <h3>pi-agent-hub</h3>
+              <span class="platform-tag">Node 22.19+ · Express 5 · node:sqlite · Vue 3 · Tauri · v0.1.2</span>
+            </div>
+            <ul class="bullet-list">
+              <li><strong>One daemon per machine, one plugin per agent.</strong> A Node child process reads each agent's own session archive — <code>pi</code> (JSONL), <code>opencode</code> (serve HTTP or CLI), <code>deepseek-harness</code> (zstd JSONL) — and normalizes it into <strong>pi session format v3</strong>. A crashing plugin cannot take the daemon down.</li>
+              <li><strong>Incremental and resumable.</strong> <code>manifest → timestamp delta → REST sync</code>: the hub returns a watermark per session, the daemon sends only what is newer, and a deterministic <code>hubSessionId</code> keeps repeated collection idempotent. Large payloads go through a gzip upload stream.</li>
+              <li><strong>One mirror in pi's own format.</strong> <code>hub-service</code> (Express 5 + <code>node:sqlite</code>) merges into a pi v3 JSONL mirror — readable by <code>pi</code> itself — with a rebuildable SQLite index on the side.</li>
+              <li><strong>A read-only viewer, not <code>pi-web</code>.</strong> The self-built Vue 3 console shows project → <code>host|agent</code> → session trees, transcripts with tool calls / images / sub-agents, and delivery state. Every session-content route is a <code>GET</code>; there is no edit or delete endpoint.</li>
+              <li><strong>Governed delivery.</strong> Pick a host, an agent and a session, then push one prompt over SSE — with images, a model and a thinking level. The daemon hands it to the agent's <em>own</em> interface (pi RPC, pi-web HTTP, opencode HTTP or CLI, dsh RPC); the archive is never rewritten.</li>
+              <li><strong>Read-only project browsing.</strong> The console can walk a remote project directory through a two-layer allowlist (hub-side path check, then <code>realpath</code> + <code>fsAllowedDirs</code> on the daemon). Listing and reading only — no writes.</li>
+              <li><strong>Self-hosted and small.</strong> Two roles (<code>admin</code> / <code>viewer</code>) plus per-host daemon tokens in one config file; Docker Compose for the server (hub + console + nginx), a Tauri tray on Windows / macOS, <code>pm2</code> on Linux.</li>
+              <li><strong>Status v0.1.2 (MIT).</strong> Aggregation, the viewer, prompt delivery, project browsing and model info work end to end; one-shot session import is not wired yet, search is a title/cwd match only, and retention GC / audit / SSE replay remain open.</li>
+            </ul>
+            <a class="repo-link" href="https://github.com/fellow99/pi-agent-hub" target="_blank" rel="noopener">
+              View on GitHub
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+            </a>
+          </article>
+        </div>
+
+        <p class="disclaimer">pi-agent-hub is an <strong>independent companion project</strong> in the same workspace — not a fifth desktop edition, and not part of the shared data plane described above: it reads session archives that the agents themselves wrote, and reaches back only through each agent's own interface. It never writes an agent's archive. MIT licensed, unofficial, not affiliated with or endorsed by the Pi or Pi Web authors.</p>
       </div>
     </section>
 

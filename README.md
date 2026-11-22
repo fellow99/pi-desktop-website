@@ -43,6 +43,9 @@
   桌面公民（托盘 / 原生通知 / 单实例 / 窗口状态记忆）· 与 `pi` CLI 共用同一套运行环境。
 - **架构故事（How it works）**：进程内宿主 → 同源 UI → 官方数据面（`fetch('/api/*')` 上行 +
   SSE 下行），收尾徽章「No CORS · No custom protocol · No login page.」（与两页现文案一致；旧描述里的「· Zero upstream patches」已按 v1.3 的分版补丁口径删除，补丁口径改由 hero trust 行**分版**表述）。
+- **配套工程**：`pi-agent-hub`（父工程 `pi-workspace` 的同级 submodule）—— 不是第五种版别，而是把各 agent
+  （`pi` / `opencode` / `deepseek-harness`）在自己机器上的会话汇总到一处只读中心、并可从控制台把一条消息经 SSE
+  下发回指定会话的独立服务；页面以独立栏目 `#hub` 介绍，并在声明中明确「不改写存档、只在各 agent 自身接口上动手」。
 - **当前版本**：`pi-desktop` **v0.17.0** · `pi-desktop-hos` **v0.17.0**（`versionCode` 1700）·
   `pi-desktop-ark` **v0.17.0**（`versionCode` 1700）·
   `pi-desktop-android` 应用内 **v0.17.0**（`versionCode` 1700；进程内 Node 26.13.0）；四个版别共同的上游载荷是 **pi-web v0.17.0**（`pi` v1.5.2）。
@@ -105,12 +108,13 @@
 | 托盘 / 原生通知 / 单实例 / 窗口状态记忆 | **原生通知 ✅ 已专项取证**（P0-5：聚焦不弹 · 最小化弹出延迟 **2054 ms** · 同会话 **10 s 冷却去重** · 冷却后可再弹 · 启动不补弹 = 5 PASS / 0 FAIL）；系统**托盘视觉呈现 ⬜ 未取证**（O7）；单实例与窗口状态记忆为代码已实现并随包构建 | `pi-desktop/src/main/{tray,notifications,window-state}.ts`、`pi-desktop/docs/桌面能力清单.md` §A#7 / §A#8 / §A#12 / §A#13 |
 | 与 `pi` CLI 共用 `~/.pi/agent` | 默认共享；设置内可切 `<userData>/pi-agent`（切换后需重启） | `pi-desktop/README.md`、`pi-desktop/docs/桌面能力清单.md` §A#14 |
 | 站点仓库 | <https://github.com/fellow99/pi-desktop-website> | `git remote -v` |
+| 配套工程 `pi-agent-hub` | 版本 **v0.1.2** · MIT · Node ≥ 22.19 · 12 包 pnpm workspace；会话汇总 / 只读查看器 / 消息下发 / 工程目录浏览 / 模型信息已端到端实现，会话导入（`501`）/ 全文搜索 / 保留期 GC / 审计 / SSE 补发仍待做 | `pi-agent-hub/README.md`、`pi-agent-hub/AGENTS.md` |
 
 ## 3. 页面结构
 
-两个语言页共享同一套纵向结构（7 个 landmark 区块）：
+两个语言页共享同一套纵向结构（8 个 landmark 区块）：
 
-1. **Nav**（`header.site-header`）：Logo + 后缀字 `Pi Desktop` · 锚点链接（功能 / 平台 / 原理）·
+1. **Nav**（`header.site-header`）：Logo + 后缀字 `Pi Desktop` · 锚点链接（功能 / 平台 / pi-agent-hub / 能力对照 / 原理）·
    胶囊形语言切换（`EN / 中文`）· 主题按钮。锚点链接 ≤ 760px 隐藏；品牌 / 语言 / 主题保留。
 2. **Hero**（`section#top`）：左列文案 —— mono eyebrow 胶囊、`<h1>`、lede、
    `ul.os-strip`（Windows / macOS / Linux / HarmonyOS / Android 五个 chip）、CTA 行
@@ -118,13 +122,18 @@
    trust 行（版本与验证状态，三个移动端版别各一行）；
    右列视觉 —— 带边框的、随主题切换的应用截图 + mono caption。
 3. **Features**（`#features`）：标题 + lede + 4 张图标卡（桌面端 2×2，≤ 820px 单列）。
-4. **Platforms**（`#platforms`）：**四张**版别卡（tag + 能力 bullet + 仓库链接；`grid-template-columns`
-   用 `repeat(4, 1fr)`，`≤1340px` 两列、`≤820px` 单列），下接覆盖声明。
-5. **Capabilities**（`#capabilities`）：**能力对照清单** —— 一张四列（Desktop / Android / HOS / Ark）
+4. **Platforms**（`#platforms`）：**四张**版别卡，**一行一个应用**（`.platform-grid` 单列通栏；
+   每张卡含 tag + 能力 bullet + 仓库链接），下接覆盖声明。宽屏（≥ 900px）卡片内部切两栏
+   （左：标题 / 平台 tag / 仓库入口；右：要点列表），≤ 900px 回落为纵向堆叠；
+   刻意不再用「四列并排」，避免四段长文案被挤成窄条。
+5. **pi-agent-hub**（`#hub`，配套工程，非版别）：标题 + lede + 一张同为 `.platform-card` 样式的通栏说明卡
+   （定位、采集 / 存储 / 只读查看 / 受控下发 / 只读目录浏览 / 自托管，以及 v0.1.2 的状态口径）+ 仓库入口，
+   下接「独立配套工程、不属四版数据面」的声明。
+6. **Capabilities**（`#capabilities`）：**能力对照清单** —— 一张四列（Desktop / Android / HOS / Ark）
    状态图标表（`.capability-table`，22 个功能项，单元格仅放 ✅/🔧/⚠️/❌/⬜/➖ 或补丁数，无描述文字），
    表下一行 mono 图例（`.capability-legend`）；外层 `.capability-wrap` 提供窄屏横向滚动。
-6. **How it works**（`#how`）：3 个带编号的步骤 + 箭头连接，结尾一个结果徽章。
-7. **Footer**：品牌 + 一句话 + ©/许可行 + 仓库链接（Desktop / Electron on HarmonyOS / HarmonyOS 版 / Android 版 / Node 运行时库 / Workspace，再加上游 Pi、Pi Web 与 harmonypc-electron、Electron）
+7. **How it works**（`#how`）：3 个带编号的步骤 + 箭头连接，结尾一个结果徽章。
+8. **Footer**：品牌 + 一句话 + ©/许可行 + 仓库链接（Desktop / Electron on HarmonyOS / HarmonyOS 版 / Android 版 / Node 运行时库 / Workspace，再加上游 Pi、Pi Web 与 harmonypc-electron、Electron）
    （Pi、Pi Web、Electron、harmony-electron 运行时，与 `fellow99` 系列仓库并列）。
 
 EN / ZH **必须保持结构一致** —— 区块顺序、元素 class、交互行为永不分化；只有文案被翻译。能力对照表的行数、列顺序（Desktop / Android / HOS / Ark）与每个图标在两页间逐格一致。
@@ -179,8 +188,9 @@ EN / ZH **必须保持结构一致** —— 区块顺序、元素 class、交互
 
 - ≥ 921px 双列 Hero（文案 : 截图 = `1fr : 1.44fr`，容器 `max-width` 1380px，
   让截图在宽屏上呈现约 1.5× 尺度）；≤ 920px 单列。
-- 能力卡 / 平台卡网格 ≤ 820px 转单列；锚点链接 ≤ 760px 隐藏；`.cta-row` 按钮
-  ≤ 640px 变全宽堆叠、`.steps` 转纵向。
+- 能力卡网格 ≤ 820px 转单列；**平台卡始终一行一个（通栏）**，≥ 900px 时卡片内部两栏
+  （左栏 `minmax(220px, 300px)`：标题 / tag / 仓库入口；右栏：要点列表），≤ 900px 回落纵向堆叠；
+  锚点链接 ≤ 760px 隐藏；`.cta-row` 按钮 ≤ 640px 变全宽堆叠、`.steps` 转纵向。
 - **实测（`file://` + 同源 iframe 逐宽度测量，EN/ZH 双页 × 明暗双主题）**：1280 / 768 / 390
   三个宽度下 `scrollWidth === clientWidth`、无任何元素越界；
   1280 → Hero 双列（约 `476px : 685px`）+ 能力/平台 2 列 + 步骤 3 列 + 锚点可见；
@@ -237,6 +247,7 @@ npx serve .        # 然后访问 http://localhost:3000/index.html
 
 | 版本 | 日期 | 内容 |
 |---|---|---|
+| v1.10 | 2026-11-22 | **新增 `pi-agent-hub` 栏目 + 平台区改版**：两页导航、结构、文案同步 —— 平台区（`#platforms`）不再「一行并排四列」，改为**一行一个应用**的通栏卡片（`.platform-grid` 单列，≥ 900px 卡片内部两栏：标题 / tag / 仓库入口在左、要点在右），并删掉 `≤1340px` 的两列回退；新增 `#hub` 区块（配套工程 `pi-agent-hub` 的定位、采集 / 镜像 / 只读查看 / 受控下发 / 只读目录浏览 / 自托管与 v0.1.2 状态口径，外加「独立配套工程、不属四版数据面、不改写存档」声明），EN/ZH 结构 1:1（8 landmark / 5 张 `.platform-card`）；§2 补「配套工程」口径、§3 页面结构、§6 响应式同步回写。验证：Playwright 1440 / 820 / 420 三宽度实测（1440 下 `.platform-grid` 单列、卡片内部 `300px + 678px` 两栏；820 回落 flex 纵向；均无横向溢出），明暗双主题截图核对，HTML 标签配平 0 错误。 |
 | v1.9 | 2026-11-04 | **版本升级 0.14.2 → 0.15.0**：四版别统一收敛到 `v0.15.0`（versionCode 1500），上游基线 `pi` v1.5.0（持平）+ `pi-web` v0.15.0（升级：运行中切模型、侧标签随主会话恢复、右面板标签拖拽排序、扩展 UI 取 pi 调色板、provider 显示名称、完成通知去重、删除被 pi 1.5.0 废弃的 HTML 导出补丁等，纯前端/JS 层）；补丁唯一交集 session-export 与我方改动区域不重叠 ⇒ hos 2 条 / ark 6 条 / android 6 条 `v0.15.0/` 目录原样拷贝（pristine v0.15.0 累计 dry-run 14/14 全绿）。本轮验证：桌面打包态 smoke 10 + 基本功能 e2e 11（KEY/工作区/文本/图片/版本接口）+ probe-renderer 7 全 PASS；鸿蒙两端签名 HAP 真机部署（HOS 基本功能全链含图片分析、Ark 设备侧真实模型调用 2/2 + 版本徽标）；Android debug/release APK 构建通过（aapt 1500/0.15.0）并完成真机验证；两页 title/Hero/trust/平台卡/§2 事实表/补丁目录引用 `v0.15.0/` 同步；发布产物 tag 指向 `v0.15.0`。 |
 | v1.8 | 2026-11-04 | **版本升级 0.14.1 → 0.14.2**：四版别统一收敛到 `v0.14.2`（versionCode 1402），上游基线 `pi` v1.5.0 + `pi-web` v0.14.2；pi-web 0.14.2 为纯前端/JS 层变更（模型选择器 scoped/all、删除侧聊、手机端 Settings 逐级全屏、触屏控件尺寸、Windows 终端优先 PowerShell、归档空标签修复；内部升级 pi 1.5.0 + 新增 `@earendil-works/pi-schema` + Next 16.4.4 / undici 8.12.3），补丁领域 6 文件零漂移 ⇒ hos 2 条 / ark 6 条 / android 6 条 `v0.14.2/` 目录原样拷贝；Android Node 引擎保持 26.13.0 / bridge 0.2.0。本轮鸿蒙两端产出**签名 HAP** 并在真机验证（启动/渲染/版本徽标、文本对话），Android 真机验证文本对话 + 视觉图片对话 + bash/read/write/grep/ls/git 工具链；两页 title/meta、Hero 显示行、trust 行、平台卡、§2 事实表、补丁目录引用 `v0.14.2/` 同步；发布产物 tag 指向 `v0.14.2`。 |
 | v1.0 | 2026-10-12 | 建档：纯静态站点设计文档（定位 / 事实表 / 结构 / 设计系统 / 交互 / 响应式 / 素材 / 部署 / 维护）。 |
