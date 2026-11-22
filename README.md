@@ -90,12 +90,12 @@
 | 事实 | 值 | 来源 |
 |---|---|---|
 | `pi-desktop` 版本 | **v0.18.0** | `pi-desktop/package.json` |
-| 桌面运行时 | Electron **43.7.9**（Node 24.21.0 / Chromium 150.0.7871.250 / ABI 148） | `pi-desktop/README.md`、`upstream.lock.json` |
+| 桌面运行时 | Electron **43.7.9**（Node 24.21.0 / Chromium 150.0.7871.250 / ABI 148） | `pi-desktop/README.md`、`pi-desktop/package.json` |
 | `pi-desktop-hos`（Electron on HarmonyOS 版）版本 | **v0.18.0** / `versionCode` **1800** | `pi-desktop-hos/AppScope/app.json5` |
 | `pi-desktop-ark`（HarmonyOS 版）版本 | **v0.18.0** / `versionCode` **1800** | `pi-desktop-ark/AppScope/app.json5` |
 | `pi-desktop-android`（Android 版） | 应用内 **v0.18.0** / `versionCode` **1800**；进程内 Node **26.13.0**（small-ICU，Maven Central `node-runtime` + `aosp-node-bridge` 0.2.0）；签名 APK 经 CI 发布 GitHub Release | `pi-desktop-android/app/build.gradle.kts`、`runtime.lock.json`、`.github/workflows/build-release.yml` |
 | 鸿蒙运行时 | Electron-on-鸿蒙 **37.2.3**（Node 22.17.0 / ABI 138） | `pi-desktop-hos/README.md` |
-| 上游基线 | `pi` **v1.6.0** + `pi-web` **v0.18.0** | `pi-desktop/upstream.lock.json`、各工程的 README 文档头 |
+| 上游基线 | `pi` **v1.6.0** + `pi-web` **v0.18.0** | `git -C ../pi describe --tags` / `git -C ../pi-web describe --tags`、各工程的 README 文档头 |
 | 上游补丁 | `pi-desktop` **1 条**（中枢服务设置分区）；`pi-desktop-hos` **4 条**（`P203-1` 四主目录「选择工作区目录」、`PFIX-1` 会话导出进程内回退、系统返回 113、中枢服务设置分区）；`pi-desktop-ark` **7 条**；`pi-desktop-android` **7 条**（与 ark 同构）——均按被 patch 的上游 tag 分目录登记、构建脚本幂等应用、构建结束即回退，上游工作树保持 pristine | `pi-desktop-hos/patches/README.md`、`pi-desktop-ark/patches/v0.18.0/`、`pi-desktop-android/patches/v0.18.0/` |
 | 桌面验证状态 | **Windows 打包态端到端已验收**（0.15.0 轮次：`smoke-desktop` 10 PASS / 0 FAIL + 打包态基本功能 e2e **11 PASS / 0 FAIL**（API KEY → 沙箱凭据 → 沙箱工作区 → 真实文本对话 → 视觉图片对话 → `/api/app-update` currentVersion=0.15.0）+ 打包态 `probe-renderer` **7 PASS / 0 FAIL**；历史轮次见构建验证记录）；**macOS / Linux 待验证** | `pi-desktop/logs/20261015-1/`、`pi-desktop/docs/构建验证记录.md` |
 | Electron on HarmonyOS 版验证状态 | **0.15.0 轮次：签名 HAP 已真机部署验证**（启动/进程/渲染/版本徽标 `web 0.15.0 · pi 1.5.0`、DeepSeek Key 落沙箱 `auth.json`、沙箱测试目录工作区、真实文本对话、图片分析对话——附件经 UI 输入到达会话且模型侧识图成功）；历史：0.13.0 轮次已构建、已签名、已真机验证（API KEY 落沙箱 `mode=600`、沙箱内工作区目录、一次真实对话与会话 JSONL 落盘、SWC 走内置 WASM 零下载）；设备 HUAWEI MateBook Pro `HAD-W32` / HarmonyOS **API 26** | `pi-desktop-hos/docs/真机验证记录.md` |
