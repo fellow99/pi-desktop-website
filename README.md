@@ -39,7 +39,7 @@
   ZH「让 Pi agent harness 在桌面安家」。
 - **四平台覆盖是标题级差异点** —— Windows、Linux、macOS（Electron 版）+ HarmonyOS + Android。
   它出现在：Hero 的 lede、lede 下的五个系统 chip（`ul.os-strip`）、**四张**平台卡、平台区声明。
-- **卖点（能力卡）**：100% 官方 Pi / Pi Web、**上游补丁分版计**（`pi-desktop` **1 条**；`pi-desktop-hos` / Electron on HarmonyOS 版 **4 条**登记补丁 —— `P203-1`「选择工作区目录」、`PFIX-1`「会话导出进程内回退」、系统返回、中枢服务设置分区；`pi-desktop-ark` / HarmonyOS 版 **7 条**幂等可逆补丁文件；`pi-desktop-android` / Android 版 **7 条**同构补丁）· 本地优先、进程内宿主 ·
+- **卖点（能力卡）**：100% 官方 Pi / Pi Web、**上游补丁分版计**（`pi-desktop` **1 条**；`pi-desktop-hos` / Electron on HarmonyOS 版 **3 条**登记补丁 —— `P203-1`「选择工作区目录」、`PFIX-1`「会话导出进程内回退」、系统返回；`pi-desktop-ark` / HarmonyOS 版 **6 条**幂等可逆补丁文件；`pi-desktop-android` / Android 版 **6 条**同构补丁）· 本地优先、进程内宿主 ·
   桌面公民（托盘 / 原生通知 / 单实例 / 窗口状态记忆）· 与 `pi` CLI 共用同一套运行环境。
 - **架构故事（How it works）**：进程内宿主 → 同源 UI → 官方数据面（`fetch('/api/*')` 上行 +
   SSE 下行），收尾徽章「No CORS · No custom protocol · No login page.」（与两页现文案一致；旧描述里的「· Zero upstream patches」已按 v1.3 的分版补丁口径删除，补丁口径改由 hero trust 行**分版**表述）。
@@ -96,7 +96,7 @@
 | `pi-desktop-android`（Android 版） | 应用内 **v0.18.0** / `versionCode` **1800**；进程内 Node **26.13.0**（small-ICU，Maven Central `node-runtime` + `aosp-node-bridge` 0.2.0）；签名 APK 经 CI 发布 GitHub Release | `pi-desktop-android/app/build.gradle.kts`、`runtime.lock.json`、`.github/workflows/build-release.yml` |
 | 鸿蒙运行时 | Electron-on-鸿蒙 **37.2.3**（Node 22.17.0 / ABI 138） | `pi-desktop-hos/README.md` |
 | 上游基线 | `pi` **v1.6.0** + `pi-web` **v0.18.0** | `git -C ../pi describe --tags` / `git -C ../pi-web describe --tags`、各工程的 README 文档头 |
-| 上游补丁 | `pi-desktop` **1 条**（中枢服务设置分区）；`pi-desktop-hos` **4 条**（`P203-1` 四主目录「选择工作区目录」、`PFIX-1` 会话导出进程内回退、系统返回 113、中枢服务设置分区）；`pi-desktop-ark` **7 条**；`pi-desktop-android` **7 条**（与 ark 同构）——均按被 patch 的上游 tag 分目录登记、构建脚本幂等应用、构建结束即回退，上游工作树保持 pristine | `pi-desktop-hos/patches/README.md`、`pi-desktop-ark/patches/v0.18.0/`、`pi-desktop-android/patches/v0.18.0/` |
+| 上游补丁 | `pi-desktop` **1 条**（中枢服务设置分区）；`pi-desktop-hos` **3 条**（`P203-1` 四主目录「选择工作区目录」、`PFIX-1` 会话导出进程内回退、系统返回 113）；`pi-desktop-ark` **6 条**；`pi-desktop-android` **6 条**（与 ark 同构）——均按被 patch 的上游 tag 分目录登记、构建脚本幂等应用、构建结束即回退，上游工作树保持 pristine（**中枢服务同步 `301-sync-daemon` 仅在 `pi-desktop` 落地，三个姊妹工程已于 2026-11-24 退场**） | `pi-desktop/patches/README.md`、`pi-desktop-hos/patches/README.md`、`pi-desktop-ark/patches/v0.18.0/`、`pi-desktop-android/patches/v0.18.0/` |
 | 桌面验证状态 | **Windows 打包态端到端已验收**（0.15.0 轮次：`smoke-desktop` 10 PASS / 0 FAIL + 打包态基本功能 e2e **11 PASS / 0 FAIL**（API KEY → 沙箱凭据 → 沙箱工作区 → 真实文本对话 → 视觉图片对话 → `/api/app-update` currentVersion=0.15.0）+ 打包态 `probe-renderer` **7 PASS / 0 FAIL**；历史轮次见构建验证记录）；**macOS / Linux 待验证** | `pi-desktop/logs/20261015-1/`、`pi-desktop/docs/构建验证记录.md` |
 | Electron on HarmonyOS 版验证状态 | **0.15.0 轮次：签名 HAP 已真机部署验证**（启动/进程/渲染/版本徽标 `web 0.15.0 · pi 1.5.0`、DeepSeek Key 落沙箱 `auth.json`、沙箱测试目录工作区、真实文本对话、图片分析对话——附件经 UI 输入到达会话且模型侧识图成功）；历史：0.13.0 轮次已构建、已签名、已真机验证（API KEY 落沙箱 `mode=600`、沙箱内工作区目录、一次真实对话与会话 JSONL 落盘、SWC 走内置 WASM 零下载）；设备 HUAWEI MateBook Pro `HAD-W32` / HarmonyOS **API 26** | `pi-desktop-hos/docs/真机验证记录.md` |
 | 桌面已知不可用 | **无阻断项** —— 终端 / PTY 已在轮次 2 实测 **✅ 可用**（根因是**本机安装不完整的空壳 prebuilds**、触发上游 `prebuild.js` 误判，**不是**上游缺 `win32-x64` 产物；已修并加构建期守卫 `FR-010-027`）。仍为 ⬜ 的只有「系统托盘视觉呈现」 | `pi-desktop/docs/桌面能力清单.md` §A#1 / §A#8 |
@@ -231,8 +231,8 @@ npx serve .        # 然后访问 http://localhost:3000/index.html
       `pi-desktop-hos` 卡的限制句（无终端 / PTY、无 `git`、无 `rg`/`fd` 二进制、插件仅本地源）**须在每次版本轮次对照
       `pi-desktop-hos/docs/鸿蒙环境能力清单-v<版本>.md` 复核后**才可保留（0.12.1 轮次已复核）。
       改动前先回查 §2 事实表。
-- [ ] **补丁口径**：页面任何「零上游改动」类表述都必须**分版**写 —— `pi-desktop` 0 条补丁、
-      `pi-desktop-hos` 有登记补丁（当前 2 条）。每次上游升级后回查 `pi-desktop-hos/patches/README.md`。
+- [ ] **补丁口径**：页面任何「零上游改动」类表述都必须**分版**写 —— `pi-desktop` 1 条补丁、
+      `pi-desktop-hos` 3 条登记补丁、`pi-desktop-ark` 6 条、`pi-desktop-android` 6 条。每次上游升级后回查各工程 `patches/README.md`。
 - [ ] **改文案？** `index.html` **和** `index_zh.html` 都要改（必要时同步 §2 的事实表）。
 - [ ] **加区块？** 两个语言页 1:1 镜像标记结构 + 在 `style.css` 里加 token / 样式。
 - [ ] **改主题或交互？** 保持 token 驱动 + 无 JS 兜底 + reduced-motion 分支。
@@ -247,6 +247,7 @@ npx serve .        # 然后访问 http://localhost:3000/index.html
 
 | 版本 | 日期 | 内容 |
 |---|---|---|
+| v1.11 | 2026-11-24 | **301 退场口径回写**：中枢服务同步（`301-sync-daemon`）实现与 pi-web 设置分区补丁**仅保留在 `pi-desktop`**，`pi-desktop-hos` / `pi-desktop-ark` / `pi-desktop-android` 三端移除运行时、装配注入与补丁 ⇒ 补丁数改为 **desktop 1 / hos 3 / ark 6 / android 6**。两页 hero 脚注、Hero trust 行、能力对照表该行与 §2 事实表同步；另改正英文页 trust 行「2 registered patches」的旧误（与中文页 3 条不一致）。 |
 | v1.10 | 2026-11-22 | **新增 `pi-agent-hub` 栏目 + 平台区改版**：两页导航、结构、文案同步 —— 平台区（`#platforms`）不再「一行并排四列」，改为**一行一个应用**的通栏卡片（`.platform-grid` 单列，≥ 900px 卡片内部两栏：标题 / tag / 仓库入口在左、要点在右），并删掉 `≤1340px` 的两列回退；新增 `#hub` 区块（配套工程 `pi-agent-hub` 的定位、采集 / 镜像 / 只读查看 / 受控下发 / 只读目录浏览 / 自托管与 v0.1.2 状态口径，外加「独立配套工程、不属四版数据面、不改写存档」声明），EN/ZH 结构 1:1（8 landmark / 5 张 `.platform-card`）；§2 补「配套工程」口径、§3 页面结构、§6 响应式同步回写。验证：Playwright 1440 / 820 / 420 三宽度实测（1440 下 `.platform-grid` 单列、卡片内部 `300px + 678px` 两栏；820 回落 flex 纵向；均无横向溢出），明暗双主题截图核对，HTML 标签配平 0 错误。 |
 | v1.9 | 2026-11-04 | **版本升级 0.14.2 → 0.15.0**：四版别统一收敛到 `v0.15.0`（versionCode 1500），上游基线 `pi` v1.5.0（持平）+ `pi-web` v0.15.0（升级：运行中切模型、侧标签随主会话恢复、右面板标签拖拽排序、扩展 UI 取 pi 调色板、provider 显示名称、完成通知去重、删除被 pi 1.5.0 废弃的 HTML 导出补丁等，纯前端/JS 层）；补丁唯一交集 session-export 与我方改动区域不重叠 ⇒ hos 2 条 / ark 6 条 / android 6 条 `v0.15.0/` 目录原样拷贝（pristine v0.15.0 累计 dry-run 14/14 全绿）。本轮验证：桌面打包态 smoke 10 + 基本功能 e2e 11（KEY/工作区/文本/图片/版本接口）+ probe-renderer 7 全 PASS；鸿蒙两端签名 HAP 真机部署（HOS 基本功能全链含图片分析、Ark 设备侧真实模型调用 2/2 + 版本徽标）；Android debug/release APK 构建通过（aapt 1500/0.15.0）并完成真机验证；两页 title/Hero/trust/平台卡/§2 事实表/补丁目录引用 `v0.15.0/` 同步；发布产物 tag 指向 `v0.15.0`。 |
 | v1.8 | 2026-11-04 | **版本升级 0.14.1 → 0.14.2**：四版别统一收敛到 `v0.14.2`（versionCode 1402），上游基线 `pi` v1.5.0 + `pi-web` v0.14.2；pi-web 0.14.2 为纯前端/JS 层变更（模型选择器 scoped/all、删除侧聊、手机端 Settings 逐级全屏、触屏控件尺寸、Windows 终端优先 PowerShell、归档空标签修复；内部升级 pi 1.5.0 + 新增 `@earendil-works/pi-schema` + Next 16.4.4 / undici 8.12.3），补丁领域 6 文件零漂移 ⇒ hos 2 条 / ark 6 条 / android 6 条 `v0.14.2/` 目录原样拷贝；Android Node 引擎保持 26.13.0 / bridge 0.2.0。本轮鸿蒙两端产出**签名 HAP** 并在真机验证（启动/渲染/版本徽标、文本对话），Android 真机验证文本对话 + 视觉图片对话 + bash/read/write/grep/ls/git 工具链；两页 title/meta、Hero 显示行、trust 行、平台卡、§2 事实表、补丁目录引用 `v0.14.2/` 同步；发布产物 tag 指向 `v0.14.2`。 |
