@@ -139,7 +139,7 @@
               <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"></rect><path d="M16 5.5H6.5A2 2 0 0 0 4.5 7.5V17"></path></svg>
             </span>
             <h3>100% <a href="https://github.com/earendil-works/pi" target="_blank" rel="noopener">upstream Pi</a> &amp; <a href="https://github.com/agegr/pi-web" target="_blank" rel="noopener">Pi Web</a> — the SDK and UI run unmodified.</h3>
-            <p>The Pi SDK and the Pi Web UI run unmodified; the shell only assembles them. The desktop shell ships zero patches, so upstream improvements land without a fork to rebase. The Electron on HarmonyOS Edition carries 3 registered patches, the HarmonyOS Edition applies its 6 pi-web patches and the Android Edition a parallel set of 6, all as idempotent, reversible files at build time — every upstream working tree stays pristine.</p>
+            <p>The Pi SDK and the Pi Web UI run unmodified; the shell only assembles them. The desktop shell ships 1 patch (the hub-service settings section) and the Electron on HarmonyOS Edition carries 3 registered patches; the HarmonyOS Edition applies its 6 pi-web patches and the Android Edition a parallel set of 6, all as idempotent, reversible files at build time — every upstream working tree stays pristine.</p>
           </article>
 
           <article class="feature-card">
@@ -259,7 +259,7 @@
           </article>
         </div>
 
-        <p class="disclaimer">Together, the four editions cover Windows, Linux and macOS (Electron), HarmonyOS (where <strong>two</strong> independent editions ship: <strong>Electron on HarmonyOS</strong> keeping the Electron runtime and <strong>HarmonyOS</strong> using ArkWeb with an embedded Node runtime) and <strong>Android</strong> (system WebView with an embedded Node runtime). Four unofficial open-source shells built on Pi and Pi Web; the desktop shell is patch-free, the Electron on HarmonyOS Edition carries 3 registered patches, and the HarmonyOS and Android Editions each carry 6 idempotent patch files. Not affiliated with, or endorsed by, the Pi or Pi Web authors. The desktop installers are unsigned, so expect a SmartScreen prompt on Windows and Gatekeeper on macOS; the Android APK is self-signed.</p>
+        <p class="disclaimer">Together, the four editions cover Windows, Linux and macOS (Electron), HarmonyOS (where <strong>two</strong> independent editions ship: <strong>Electron on HarmonyOS</strong> keeping the Electron runtime and <strong>HarmonyOS</strong> using ArkWeb with an embedded Node runtime) and <strong>Android</strong> (system WebView with an embedded Node runtime). Four unofficial open-source shells built on Pi and Pi Web; the desktop shell ships 1 patch, the Electron on HarmonyOS Edition carries 3 registered patches, and the HarmonyOS and Android Editions each carry 6 idempotent patch files. Not affiliated with, or endorsed by, the Pi or Pi Web authors. The desktop installers are unsigned, so expect a SmartScreen prompt on Windows and Gatekeeper on macOS; the Android APK is self-signed.</p>
       </div>
     </section>
 

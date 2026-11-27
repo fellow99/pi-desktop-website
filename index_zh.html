@@ -139,7 +139,7 @@
               <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2.5"></rect><path d="M16 5.5H6.5A2 2 0 0 0 4.5 7.5V17"></path></svg>
             </span>
             <h3>100% 上游 <a href="https://github.com/earendil-works/pi" target="_blank" rel="noopener">Pi</a> 与 <a href="https://github.com/agegr/pi-web" target="_blank" rel="noopener">Pi Web</a> —— SDK 与 UI 原样运行。</h3>
-            <p>Pi SDK 与 Pi Web UI 原样运行，壳只负责装配。桌面版 0 条补丁，上游的改进可以直接跟上，不必维护一个 fork 去 rebase。Electron on HarmonyOS 版有 3 条登记补丁；HarmonyOS 版施加 6 条、Android 版施加同构的 6 条 pi-web 补丁，均为构建期幂等可逆文件、随即回退，所有上游工作树始终保持 pristine。</p>
+            <p>Pi SDK 与 Pi Web UI 原样运行，壳只负责装配。桌面版 1 条补丁（中枢服务设置分区），Electron on HarmonyOS 版有 3 条登记补丁；HarmonyOS 版施加 6 条、Android 版施加同构的 6 条 pi-web 补丁，均为构建期幂等可逆文件、随即回退，所有上游工作树始终保持 pristine。</p>
           </article>
 
           <article class="feature-card">
@@ -259,7 +259,7 @@
           </article>
         </div>
 
-        <p class="disclaimer">四个版别合起来覆盖 Windows、Linux、macOS（Electron 版），鸿蒙（端上有<strong>两个</strong>独立版别：保留 Electron 运行时的 <strong>Electron on HarmonyOS 版</strong>、用 ArkWeb + 内嵌 Node 的 <strong>HarmonyOS 版</strong>）与<strong>安卓</strong>（系统 WebView + 内嵌 Node）。四个建立在 Pi 与 Pi Web 之上的非官方开源壳；桌面版无补丁，Electron on HarmonyOS 版有 3 条登记补丁，HarmonyOS 版与 Android 版各有 6 条幂等补丁文件。与 Pi 或 Pi Web 作者无隶属关系，也未获其背书。桌面安装包未签名，Windows 上会出现 SmartScreen 提示、macOS 上会被 Gatekeeper 拦下；Android APK 为自签名。</p>
+        <p class="disclaimer">四个版别合起来覆盖 Windows、Linux、macOS（Electron 版），鸿蒙（端上有<strong>两个</strong>独立版别：保留 Electron 运行时的 <strong>Electron on HarmonyOS 版</strong>、用 ArkWeb + 内嵌 Node 的 <strong>HarmonyOS 版</strong>）与<strong>安卓</strong>（系统 WebView + 内嵌 Node）。四个建立在 Pi 与 Pi Web 之上的非官方开源壳；桌面版 1 条补丁，Electron on HarmonyOS 版有 3 条登记补丁，HarmonyOS 版与 Android 版各有 6 条幂等补丁文件。与 Pi 或 Pi Web 作者无隶属关系，也未获其背书。桌面安装包未签名，Windows 上会出现 SmartScreen 提示、macOS 上会被 Gatekeeper 拦下；Android APK 为自签名。</p>
       </div>
     </section>
 
