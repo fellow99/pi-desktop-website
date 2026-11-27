@@ -100,7 +100,7 @@
             </a>
           </div>
           <p class="trust">
-            桌面版 v0.19.0 · Windows 打包构建通过（smoke 10 PASS，BUILD_ID vxIdm0QC9upmemdyHwCDn）；渲染层探针、e2e 与 macOS/Linux 待验证（测试机执行）
+            桌面版 v0.19.0 · Windows 打包构建通过（smoke 10 PASS + 渲染层探针 7 PASS，BUILD_ID vxIdm0QC9upmemdyHwCDn）；安装/卸载、e2e 与 macOS/Linux 待验证（测试机执行）
             <br>
             Electron on HarmonyOS<sup>(1)</sup> v0.19.0 · versionCode 1900 · 本轮已构建并 debug 签名通过（382.9 MB HAP；设备复验待进行——0.15.0 签名 HAP 已真机验证） · 3 条登记的上游补丁
             <br>
@@ -188,7 +188,7 @@
               <li>随机 loopback 端口配宿主生成的随机强密码 —— 凭据由壳注入，登录页永不出现。</li>
               <li>随包分发 <code>pi-dist.tar.gz</code>，首启解压到 <code>userData</code>，之后按 SHA-256 marker 跳过。</li>
               <li>安装包：Squirrel（Windows）、DMG（macOS）、deb / rpm / zip（Linux）—— 未签名，SmartScreen 与 Gatekeeper 会拦。</li>
-              <li>状态：v0.19.0 · Windows 打包构建通过（smoke 10 PASS，BUILD_ID vxIdm0QC9upmemdyHwCDn，载荷 207.1 MB）；渲染层探针与 e2e 因壳的单实例锁无法与本机已装的 0.18.0 并行运行，待测试机执行。</li>
+              <li>状态：v0.19.0 · Windows 打包构建通过（<code>smoke-desktop</code> 10 PASS + 打包态 <code>probe-renderer</code> 7 PASS；BUILD_ID vxIdm0QC9upmemdyHwCDn，载荷 207.1 MB）；版本徽标 <code>web v0.19.0 · pi v1.6.1</code>，DeepSeek Key / 工作区校验 / 真实文本对话均已验证；安装-卸载、图片分析对话与打包态 e2e 待测试机执行。</li>
             </ul>
             <a class="repo-link" href="https://github.com/fellow99/pi-desktop" target="_blank" rel="noopener">
               在 GitHub 上查看

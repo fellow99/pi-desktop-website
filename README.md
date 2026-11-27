@@ -104,7 +104,7 @@
 | HarmonyOS 版验证状态 | **0.15.0 轮次：签名 HAP 已真机部署 + 设备用例通道 `model` 套件 2/2**（真实 DeepSeek 非流式 + 流式 SSE，compat 形态；版本徽标 `web 0.15.0 · pi 1.5.0`）；历史：0.12.x 轮次已构建、已签名、已真机验证（HUAWEI MateBook Pro `HAD-W24` / API 26）：进程内 Node `v24.2.0`、进程内 Next、ArkWeb 前端、文件信箱宿主桥、权限 / 选择器 / 通知 | `pi-desktop-ark/docs/001-能力复刻评估.md` |
 | HarmonyOS 版已知不可用 | 终端 / PTY ❌（无 `devpts`）· `git`/`rg`/`fd` ❌ · 插件联网安装 ❌ · 真 JIT ❌（运行形态固定 `--jitless`，**无需 ACL**，WASM/code-mode 不可用） | `pi-desktop-ark/docs/001-能力复刻评估.md` §B |
 | 发布产物 | `pi-desktop`：tag **`v0.19.0`**（`v0.11.1` 的 GitHub Release 有 9 个资产：Windows `Setup.exe` / `full.nupkg` / `RELEASES`、win32-x64 · darwin-arm64 · linux-x64 三个 zip、macOS `arm64.dmg`、`amd64.deb`、`x86_64.rpm`）；`pi-desktop-hos`：tag **`v0.19.0`**、**无 Release**（HAP 仅本地产出） | `git tag`、GitHub Release 页 `v0.11.1`、`pi-desktop-hos/README.md` |
-| 分发与签名 | 桌面版走 **GitHub Release**（tag `v0.19.0`；`v0.11.1` 时 CI / Release 流水线跑绿）；两个鸿蒙版别目前都只在本地产出 HAP。三者 v1 **不签名、不公证、不静默更新** | `pi-desktop/docs/发布与更新.md` §7 |
+| 分发与签名 | 桌面版走 **GitHub Release**（tag `v0.19.0`；`v0.11.1` 时 CI / Release 流水线跑绿，本轮 `v0.19.0` 已发布 12 个资产）；两个鸿蒙版别目前只在本地产出 HAP（本轮均已 debug 签名通过）。三者 v1 **不做操作系统级代码签名与公证、不静默更新**（与 HAP 的 debug 签名无关） | `pi-desktop/docs/发布与更新.md` §7 |
 | 托盘 / 原生通知 / 单实例 / 窗口状态记忆 | **原生通知 ✅ 已专项取证**（P0-5：聚焦不弹 · 最小化弹出延迟 **2054 ms** · 同会话 **10 s 冷却去重** · 冷却后可再弹 · 启动不补弹 = 5 PASS / 0 FAIL）；系统**托盘视觉呈现 ⬜ 未取证**（O7）；单实例与窗口状态记忆为代码已实现并随包构建 | `pi-desktop/src/main/{tray,notifications,window-state}.ts`、`pi-desktop/docs/桌面能力清单.md` §A#7 / §A#8 / §A#12 / §A#13 |
 | 与 `pi` CLI 共用 `~/.pi/agent` | 默认共享；设置内可切 `<userData>/pi-agent`（切换后需重启） | `pi-desktop/README.md`、`pi-desktop/docs/桌面能力清单.md` §A#14 |
 | 站点仓库 | <https://github.com/fellow99/pi-desktop-website> | `git remote -v` |
