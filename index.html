@@ -100,15 +100,15 @@
             </a>
           </div>
           <p class="trust">
-            Desktop v0.18.0 · packaged build on Windows with smoke 10 PASS; renderer probe, e2e and macOS/Linux pending (test machine)
+            Desktop v0.19.0 · packaged build on Windows with smoke 10 PASS (BUILD_ID vxIdm0QC9upmemdyHwCDn); renderer probe, e2e and macOS/Linux pending (test machine)
             <br>
-            Electron on HarmonyOS<sup>(1)</sup> v0.18.0 · versionCode 1800 · built this round (unsigned HAP; signing and device re-verification pending — 0.15.0 signed HAP verified on device) · 3 registered upstream patches
+            Electron on HarmonyOS<sup>(1)</sup> v0.19.0 · versionCode 1900 · built and debug-signed this round (382.9 MB HAP; device re-verification pending — 0.15.0 signed HAP verified on device) · 3 registered upstream patches
             <br>
-            HarmonyOS Edition v0.18.0 · ArkWeb + in-process Node v24.2.0 · built this round (unsigned HAP; device re-verification pending — 0.15.0 Level-0 verified on device + device model suite 2/2) (2-in-1 / tablet / phone, API 26)
+            HarmonyOS Edition v0.19.0 · ArkWeb + in-process Node v24.2.0 · built and debug-signed this round (136.1 MB HAP; device re-verification pending — 0.15.0 Level-0 verified on device + device model suite 2/2) (2-in-1 / tablet / phone, API 26)
             <br>
-            Android Edition v0.18.0 · versionCode 1800 · system WebView + in-process Node v26.13.0 · built this round (debug and release APK; device re-verification pending — 0.15.0 verified on device)
+            Android Edition v0.19.0 · versionCode 1900 · system WebView + in-process Node v26.13.0 · built this round (debug and release APK; on-device install blocked by the device's MIUI USB-install restriction, so re-verification is pending — 0.15.0 verified on device)
             <br>
-            Built on pi-web v0.18.0 (pi v1.6.0) · desktop shell ships 1 patch · Electron on HarmonyOS 3 · HarmonyOS 6 · Android 6
+            Built on pi-web v0.19.0 (pi v1.6.1) · desktop shell ships 1 patch · Electron on HarmonyOS 3 · HarmonyOS 6 · Android 6
             <br>
             <sup>(1)</sup>Verified on a HUAWEI MateBook Pro (<code>HAD-W32</code>), HarmonyOS API 26; 2-in-1 and tablet.
           </p>
@@ -188,7 +188,7 @@
               <li>Random loopback port with a host-generated random password — credentials are injected, so the login page never appears.</li>
               <li>Ships <code>pi-dist.tar.gz</code>, extracted into <code>userData</code> on first launch and skipped afterwards (SHA-256 marker).</li>
               <li>Installers: Squirrel (Windows), DMG (macOS), deb / rpm / zip (Linux) — unsigned, so SmartScreen and Gatekeeper will ask.</li>
-              <li>Status: v0.18.0 · packaged build on Windows with smoke 10 PASS; renderer probe, e2e and macOS/Linux pending (test machine).</li>
+              <li>Status: v0.19.0 · packaged build on Windows with smoke 10 PASS (BUILD_ID vxIdm0QC9upmemdyHwCDn; 207.1 MB payload); renderer probe and e2e cannot run next to the installed 0.18.0 shell because of the single-instance lock, so they are pending on a test machine.</li>
             </ul>
             <a class="repo-link" href="https://github.com/fellow99/pi-desktop" target="_blank" rel="noopener">
               View on GitHub
@@ -209,7 +209,7 @@
               <li><strong>compat disables code-mode</strong>: the JS sandbox needs WebAssembly and cannot coexist with <code>--jitless</code> (its self-test fails, so the tool is never registered). Everything else is unaffected — chat with streaming, image attachments and vision, the Git extension, file and shell tools, and the ArkWeb page itself.</li>
               <li>Verified on device — HUAWEI MateBook Pro (<code>HAD-W24</code> / <code>HAD-W32</code>) and HUAWEI Enjoy 90 (<code>JUY-AL80</code>, phone), HarmonyOS API 26; capability parity is tracked feature by feature in <code>docs/001-能力复刻评估.md</code>.</li>
               <li>Known limitations: no terminal / PTY (the platform has no <code>devpts</code>); the runtime mode is fixed to <code>--jitless</code> (compat), so there is no real-JIT ACL dependency and WebAssembly / code-mode is unavailable.</li>
-              <li>Status: v0.18.0 · built this round (unsigned HAP; device re-verification pending — 0.15.0 Level-0 verified on device: boot/render/version/deepseek key/sandbox workspace/text chat/image chat). Historical: 0.12.x scaffold + Phase 1 capabilities on device.</li>
+              <li>Status: v0.19.0 · built and debug-signed this round (136.1 MB HAP, payload archive 85.7 MiB / SHA-256 07c79770f41d…); device re-verification pending — 0.15.0 Level-0 verified on device: boot/render/version/deepseek key/sandbox workspace/text chat/image chat. Historical: 0.12.x scaffold + Phase 1 capabilities on device.</li>
             </ul>
             <a class="repo-link" href="https://github.com/fellow99/pi-desktop-ark" target="_blank" rel="noopener">
               View on GitHub
@@ -228,7 +228,7 @@
               <li>The full upstream Pi Web UI; sessions persist inside the app sandbox.</li>
               <li>Binds <code>0.0.0.0</code> and the window connects over the LAN IP, since HarmonyOS isolates loopback the other way.</li>
               <li>Known limitations: no terminal / PTY, no <code>git</code>, no ripgrep or fd binaries, plugin installs are local-source only.</li>
-              <li>Status: v0.18.0 · versionCode 1800 · built this round (unsigned HAP; device re-verification pending — 0.15.0 signed HAP verified on device: boot / render / version badge / DeepSeek key / sandbox workspace / text chat / image-analysis chat).</li>
+              <li>Status: v0.19.0 · versionCode 1900 · built and debug-signed this round (382.9 MB HAP); device re-verification pending — 0.15.0 signed HAP verified on device: boot / render / version badge / DeepSeek key / sandbox workspace / text chat / image-analysis chat.</li>
             </ul>
             <a class="repo-link" href="https://github.com/fellow99/pi-desktop-hos" target="_blank" rel="noopener">
               View on GitHub
@@ -250,7 +250,7 @@
               <li>Extensions ship in the payload: <code>android-exec</code>, <code>android-search</code>, <code>android-pty</code>, workspace-roots, SAF and more.</li>
               <li>The only edition with a real <strong>foreground service</strong> for background keep-alive; <code>127.0.0.1</code> random port, loopback password-free, SAF directory picker.</li>
               <li>Engine provenance is gated by <code>verify-runtime.mjs</code> against <code>runtime.lock.json</code> (SHA-256 + ELF gates); CI then runs <code>zipalign -P 16</code> and the compliance gates.</li>
-              <li>Status: tag <code>v0.15.0</code> built a signed APK published to GitHub Releases; in-app version 0.18.0 / versionCode 1800 (device re-verification pending).</li>
+              <li>Status: tag <code>v0.15.0</code> built a signed APK published to GitHub Releases; in-app version 0.19.0 / versionCode 1900 (debug 482.1 MB / release 473.1 MB built this round; on-device install blocked by the device's MIUI USB-install restriction, so re-verification is pending).</li>
             </ul>
             <a class="repo-link" href="https://github.com/fellow99/pi-desktop-android" target="_blank" rel="noopener">
               View on GitHub
@@ -340,7 +340,7 @@
               <tr><td class="cap-feature">System tray</td><td class="cap-status">✅</td><td class="cap-status">➖</td><td class="cap-status">❌</td><td class="cap-status">❌</td></tr>
               <tr><td class="cap-feature">External links → system browser</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td></tr>
               <tr><td class="cap-feature">Project trust gate</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td><td class="cap-status">✅</td></tr>
-              <tr><td class="cap-feature">Patch count vs. pi-web v0.18.0</td><td class="cap-status">1</td><td class="cap-status">6</td><td class="cap-status">3</td><td class="cap-status">6</td></tr>
+              <tr><td class="cap-feature">Patch count vs. pi-web v0.19.0</td><td class="cap-status">1</td><td class="cap-status">6</td><td class="cap-status">3</td><td class="cap-status">6</td></tr>
             </tbody>
           </table>
         </div>
